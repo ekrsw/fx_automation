@@ -92,3 +92,7 @@
 2025-06-06 17:45:05,423 - watchfiles.main - INFO - 1 change detected
 2025-06-06 17:46:18,522 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
 2025-06-06 17:46:18,584 - watchfiles.main - INFO - 3 changes detected
+2025-06-06 17:46:44,437 - watchfiles.main - INFO - 42 changes detected
+2025-06-06 17:47:04,615 - watchfiles.main - INFO - 49 changes detected
+2025-06-06 17:47:12,775 - watchfiles.main - INFO - 7 changes detected
+2025-06-06 17:48:58,298 - watchfiles.main - INFO - 1 change detected
