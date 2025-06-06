@@ -142,9 +142,9 @@ class MonitoringService:
             cursor.execute("""
                 SELECT 
                     COUNT(*) as total_trades,
-                    SUM(CASE WHEN profit > 0 THEN 1 ELSE 0 END) as winning_trades,
-                    SUM(profit) as total_profit,
-                    AVG(profit) as avg_profit
+                    SUM(CASE WHEN profit_loss > 0 THEN 1 ELSE 0 END) as winning_trades,
+                    SUM(profit_loss) as total_profit,
+                    AVG(profit_loss) as avg_profit
                 FROM trades 
                 WHERE DATE(open_time) = ?
             """, (today,))
@@ -336,9 +336,9 @@ class MonitoringService:
             
             # 最近の損失をチェック
             cursor.execute("""
-                SELECT SUM(profit) FROM trades 
+                SELECT SUM(profit_loss) FROM trades 
                 WHERE open_time > datetime('now', '-24 hours')
-                AND profit < 0
+                AND profit_loss < 0
             """)
             daily_loss = cursor.fetchone()[0] or 0
             

@@ -37,7 +37,7 @@ class BacktestEngine:
             # 市場データを取得
             market_data = await self._get_market_data(symbol, start_date, end_date)
             
-            if len(market_data) < 100:
+            if len(market_data) < 20:  # スキャルピング戦略では少ないデータでもテスト可能
                 raise ValueError(f"データが不足しています: {len(market_data)}件")
             
             # バックテスト実行
@@ -62,22 +62,36 @@ class BacktestEngine:
         try:
             conn = get_db_connection()
             
+            # Handle mixed timestamp formats by using a more flexible query
             query = """
                 SELECT timestamp, open, high, low, close, volume
                 FROM market_data
-                WHERE symbol = ? AND timestamp BETWEEN ? AND ?
+                WHERE symbol = ?
                 ORDER BY timestamp
             """
             
-            df = pd.read_sql_query(query, conn, params=(symbol, start_date, end_date))
+            df = pd.read_sql_query(query, conn, params=(symbol,))
             conn.close()
             
             if df.empty:
                 raise ValueError(f"指定期間のデータが見つかりません: {symbol} ({start_date} - {end_date})")
             
-            # データタイプを調整
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            # データタイプを調整（混在する形式に対応）
+            df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed', errors='coerce')
             df = df.set_index('timestamp')
+            
+            # 日付範囲でフィルタリング
+            start_dt = pd.to_datetime(start_date, format='mixed', errors='coerce')
+            end_dt = pd.to_datetime(end_date, format='mixed', errors='coerce')
+            
+            logger.info(f"データフィルタリング前: {len(df)}件")
+            logger.info(f"要求期間: {start_date} - {end_date}")
+            logger.info(f"変換後期間: {start_dt} - {end_dt}")
+            logger.info(f"データ範囲: {df.index.min()} - {df.index.max()}")
+            
+            if not pd.isna(start_dt) and not pd.isna(end_dt):
+                df = df[(df.index >= start_dt) & (df.index <= end_dt)]
+                logger.info(f"フィルタリング後: {len(df)}件")
             
             # 数値型に変換
             for col in ['open', 'high', 'low', 'close', 'volume']:
@@ -115,7 +129,10 @@ class BacktestEngine:
             data = await self._calculate_technical_indicators(data, parameters)
             
             # 各時点でのシミュレーション
-            for i in range(100, len(data)):  # 最初の100件はテクニカル指標計算のため除外
+            start_index = min(10, len(data) - 5)  # スキャルピング用に開始を早める
+            logger.info(f"バックテスト開始インデックス: {start_index}, 総データ数: {len(data)}")
+            
+            for i in range(start_index, len(data)):
                 current_time = data.index[i]
                 current_data = data.iloc[:i+1]  # 現在までのデータ
                 current_price = data.iloc[i]
@@ -345,7 +362,7 @@ class BacktestEngine:
     
     async def _generate_signal(self, data: pd.DataFrame, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """
-        エントリーシグナルを生成
+        エントリーシグナルを生成（簡略化版）
         """
         try:
             current = data.iloc[-1]
@@ -358,35 +375,67 @@ class BacktestEngine:
                 'take_profit': None
             }
             
-            # ダウ理論とテクニカル指標を組み合わせたシグナル
+            # 高頻度スキャルピング戦略
             score = 0
             
-            # トレンドチェック
-            if current['trend'] == 1:  # 上昇トレンド
-                score += 30
-            elif current['trend'] == -1:  # 下降トレンド
-                score -= 30
+            # 短期価格変動ベースの高頻度戦略
+            if len(data) >= 5:
+                # 直近5期間の価格変動を分析
+                recent_prices = data['close'].tail(5)
+                short_ma = recent_prices.mean()
+                current_price_val = current['close']
+                
+                # 短期移動平均からの乖離率
+                ma_deviation = (current_price_val - short_ma) / short_ma
+                
+                # 直前の価格変動（スキャルピング用の小さな値）
+                price_change = (current['close'] - prev['close']) / prev['close']
+                
+                # ボラティリティ（直近5期間の標準偏差）
+                volatility = recent_prices.std() / recent_prices.mean()
+                
+                # 厳選された取引条件（質重視のスキャルピング）
+                # 0.05%以上の明確な変動で反応（より厳格に）
+                if price_change > 0.0005:  # 0.05%上昇
+                    score += 50
+                elif price_change < -0.0005:  # 0.05%下落  
+                    score -= 50
+                
+                # 移動平均乖離による追加シグナル（より厳格に）
+                if ma_deviation > 0.0008:  # 0.08%以上上乖離
+                    score += 25
+                elif ma_deviation < -0.0008:  # 0.08%以上下乖離
+                    score -= 25
+                
+                # 勢いの継続性チェック（連続する方向性）
+                if len(data) >= 3:
+                    prev_change = (prev['close'] - data['close'].iloc[-3]) / data['close'].iloc[-3]
+                    if price_change > 0 and prev_change > 0:  # 連続上昇
+                        score += 15
+                    elif price_change < 0 and prev_change < 0:  # 連続下落
+                        score -= 15
+                
+                # ボラティリティフィルター（適度なボラティリティのみ）
+                if 0.0008 < volatility < 0.003:  # 適度なボラティリティ範囲
+                    score = int(score * 1.2)  # 1.2倍に調整
+                elif volatility > 0.005:  # 過度なボラティリティは減点
+                    score = int(score * 0.8)
             
-            # RSIチェック
-            if not pd.isna(current['rsi']):
-                if current['rsi'] < 30:  # 売られすぎ
+            # RSIがある場合はそれも考慮
+            if not pd.isna(current.get('rsi', float('nan'))):
+                if current['rsi'] < 40:  # 売られすぎ
                     score += 20
-                elif current['rsi'] > 70:  # 買われすぎ
+                elif current['rsi'] > 60:  # 買われすぎ
                     score -= 20
             
             # 移動平均との関係
-            if not pd.isna(current['ma']):
+            if not pd.isna(current.get('ma', float('nan'))):
                 if current['close'] > current['ma']:
-                    score += 15
+                    score += 10
                 elif current['close'] < current['ma']:
-                    score -= 15
+                    score -= 10
             
-            # ボリンジャーバンドチェック
-            if not pd.isna(current['bb_upper']) and not pd.isna(current['bb_lower']):
-                if current['close'] < current['bb_lower']:  # 下限タッチ
-                    score += 25
-                elif current['close'] > current['bb_upper']:  # 上限タッチ
-                    score -= 25
+            logger.info(f"Signal debug - Price change: {price_change if len(data) >= 2 else 'N/A'}, Score: {score}, RSI: {current.get('rsi', 'N/A')}, MA: {current.get('ma', 'N/A')}, Close: {current['close']}")
             
             # シグナル判定
             entry_threshold = parameters.get('entry_threshold', 50)
@@ -394,14 +443,17 @@ class BacktestEngine:
             if score >= entry_threshold:
                 signal['action'] = 'buy'
                 signal['score'] = score
-                signal['stop_loss'] = current['close'] * 0.98  # 2%のストップロス
-                signal['take_profit'] = current['close'] * 1.06  # 6%のテイクプロフィット
+                # スプレッド考慮の改善されたリスク・リワード比 1:6 (SL:0.05%, TP:0.30%)
+                signal['stop_loss'] = current['close'] * 0.9995  # 0.05%のストップロス
+                signal['take_profit'] = current['close'] * 1.0030  # 0.30%のテイクプロフィット
+                logger.info(f"BUY signal generated - Score: {score}, Entry: {current['close']}, SL: {signal['stop_loss']:.5f}, TP: {signal['take_profit']:.5f}")
                 
             elif score <= -entry_threshold:
                 signal['action'] = 'sell'
                 signal['score'] = abs(score)
-                signal['stop_loss'] = current['close'] * 1.02  # 2%のストップロス
-                signal['take_profit'] = current['close'] * 0.94  # 6%のテイクプロフィット
+                signal['stop_loss'] = current['close'] * 1.0005  # 0.05%のストップロス
+                signal['take_profit'] = current['close'] * 0.9970  # 0.30%のテイクプロフィット
+                logger.info(f"SELL signal generated - Score: {score}, Entry: {current['close']}, SL: {signal['stop_loss']:.5f}, TP: {signal['take_profit']:.5f}")
             
             return signal
             

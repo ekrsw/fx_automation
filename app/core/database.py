@@ -58,9 +58,13 @@ class DatabaseManager:
                     stop_loss REAL,
                     take_profit REAL,
                     profit_loss REAL DEFAULT 0,
+                    profit REAL DEFAULT 0,
                     status TEXT DEFAULT 'open',
                     entry_time TEXT NOT NULL,
                     exit_time TEXT,
+                    open_time TEXT,
+                    close_time TEXT,
+                    ticket INTEGER,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 )
             ''')
