@@ -6,6 +6,8 @@ from app.core.config import settings
 from app.core.logging import setup_logging, get_logger
 from app.api.market_data import router as market_data_router
 from app.api.analysis import router as analysis_router
+from app.api.trading import router as trading_router
+from app.api.reports import router as reports_router
 
 setup_logging()
 logger = get_logger()
@@ -27,6 +29,8 @@ app.add_middleware(
 
 app.include_router(market_data_router)
 app.include_router(analysis_router)
+app.include_router(trading_router)
+app.include_router(reports_router)
 
 @app.on_event("startup")
 async def startup_event():

@@ -1,0 +1,94 @@
+2025-06-06 17:24:15,464 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:24:15,830 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:24:15,949 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:24:16,383 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:24:16,388 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:24:16,470 - watchfiles.main - INFO - 4 changes detected
+2025-06-06 17:27:36,680 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:27:45,041 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:28:31,288 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 17:28:31,358 - watchfiles.main - INFO - 3 changes detected
+2025-06-06 17:31:18,242 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 17:31:18,291 - watchfiles.main - INFO - 3 changes detected
+2025-06-06 17:35:29,962 - app.services.technical_analysis - INFO - Detected 0 swing points from 100 bars
+2025-06-06 17:35:29,965 - app.services.technical_analysis - INFO - ZigZag calculated: 8 points with 0.1% deviation
+2025-06-06 17:35:29,965 - app.services.technical_analysis - INFO - Technical analysis completed for 100 data points
+2025-06-06 17:35:29,965 - app.api.analysis - INFO - Technical analysis completed for USDJPY
+2025-06-06 17:36:18,422 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 17:36:18,447 - watchfiles.main - INFO - 3 changes detected
+2025-06-06 17:39:59,551 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:39:59,751 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:40:00,121 - watchfiles.main - INFO - 2 changes detected
+2025-06-06 17:40:00,258 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:40:00,283 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:40:00,286 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:40:00,479 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:40:45,599 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:40:45,736 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:40:46,108 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:40:46,112 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:40:46,129 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:40:46,131 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:40:46,469 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:41:18,598 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 17:41:18,638 - watchfiles.main - INFO - 3 changes detected
+2025-06-06 17:41:43,863 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:41:44,039 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:41:44,400 - watchfiles.main - INFO - 2 changes detected
+2025-06-06 17:41:44,436 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:41:44,456 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:41:44,458 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:41:44,755 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:41:51,904 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:41:52,027 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:41:52,393 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:41:52,413 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:41:52,432 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:41:52,437 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:41:52,752 - watchfiles.main - INFO - 13 changes detected
+2025-06-06 17:42:26,455 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:42:26,579 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:42:26,943 - watchfiles.main - INFO - 4 changes detected
+2025-06-06 17:42:26,958 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:42:26,977 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:42:26,981 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:42:27,306 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:03,902 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:04,051 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:43:04,417 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:04,433 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:43:04,451 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:43:04,455 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:43:04,778 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:12,756 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:12,937 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:43:13,311 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:43:13,321 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:43:13,341 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:43:13,346 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:43:13,668 - watchfiles.main - INFO - 7 changes detected
+2025-06-06 17:44:03,123 - app.services.risk_management - INFO - Position size calculated for USDJPY: 0.3 lots, Risk: 2000.00
+2025-06-06 17:44:03,125 - app.services.risk_management - INFO - Position size calculated for USDJPY: 0.3 lots, Risk: 2000.00
+2025-06-06 17:44:03,125 - app.services.risk_management - INFO - Trade signal validation for USDJPY: VALID
+2025-06-06 17:44:03,127 - app.api.reports - ERROR - Error getting trading summary: 'NoneType' object is not iterable
+2025-06-06 17:44:12,200 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:44:12,318 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:44:12,682 - watchfiles.main - INFO - 4 changes detected
+2025-06-06 17:44:12,801 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:44:12,828 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:44:12,832 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:44:13,041 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:44:21,626 - app.api.reports - ERROR - Error getting trading summary: cannot convert dictionary update sequence element #0 to a sequence
+2025-06-06 17:44:29,253 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:44:29,385 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 17:44:29,751 - watchfiles.main - INFO - 4 changes detected
+2025-06-06 17:44:29,766 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:44:29,785 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 17:44:29,790 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 17:44:30,116 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:44:43,428 - app.services.risk_management - INFO - Position size calculated for USDJPY: 0.3 lots, Risk: 2000.00
+2025-06-06 17:44:43,430 - app.services.risk_management - INFO - Position size calculated for USDJPY: 0.3 lots, Risk: 2000.00
+2025-06-06 17:44:43,430 - app.services.risk_management - INFO - Trade signal validation for USDJPY: VALID
+2025-06-06 17:45:05,423 - watchfiles.main - INFO - 1 change detected
+2025-06-06 17:46:18,522 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 17:46:18,584 - watchfiles.main - INFO - 3 changes detected

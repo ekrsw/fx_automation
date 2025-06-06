@@ -9,7 +9,6 @@
 
 //--- Include files
 #include <Trade\Trade.mqh>
-#include <JSON.mqh>
 
 //--- Input parameters
 input string   API_URL = "http://127.0.0.1:8000";           // FastAPI Server URL
@@ -32,6 +31,11 @@ int OnInit()
     Print("API URL: ", API_URL);
     Print("Target Symbol: ", TARGET_SYMBOL);
     Print("Send Interval: ", DATA_SEND_INTERVAL, " seconds");
+    
+    // ファイルパス情報を表示
+    Print("Log file path: ", log_file);
+    Print("Terminal data path: ", TerminalInfoString(TERMINAL_DATA_PATH));
+    Print("Terminal common path: ", TerminalInfoString(TERMINAL_COMMONDATA_PATH));
     
     // ログファイル初期化
     if(ENABLE_LOGGING)
@@ -122,7 +126,7 @@ void SendMarketData()
 {
     // OHLC データ取得
     MqlRates rates[];
-    int copied = CopyRates(TARGET_SYMBOL, TIMEFRAME_PERIOD, 0, 100, rates);
+    int copied = CopyRates(TARGET_SYMBOL, (ENUM_TIMEFRAMES)TIMEFRAME_PERIOD, 0, 100, rates);
     
     if(copied <= 0)
     {
@@ -213,16 +217,24 @@ void WriteLog(string message)
 {
     if(!ENABLE_LOGGING) return;
     
-    int file_handle = FileOpen(log_file, FILE_WRITE | FILE_TXT | FILE_COMMON);
+    // ファイルを追記モードで開く
+    int file_handle = FileOpen(log_file, FILE_WRITE | FILE_READ | FILE_TXT | FILE_COMMON);
     if(file_handle == INVALID_HANDLE)
     {
-        Print("ERROR: Cannot create log file");
+        Print("ERROR: Cannot create log file: ", log_file);
+        Print("Error code: ", GetLastError());
         return;
     }
     
-    string log_entry = TimeToString(TimeCurrent()) + " - " + message + "\n";
-    FileWrite(file_handle, log_entry);
+    // ファイルの末尾に移動
+    FileSeek(file_handle, 0, SEEK_END);
+    
+    string log_entry = TimeToString(TimeCurrent()) + " - " + message;
+    FileWriteString(file_handle, log_entry + "\r\n");
     FileClose(file_handle);
+    
+    // デバッグ用：ターミナルにもログを出力
+    Print("LOG: ", message);
 }
 
 //+------------------------------------------------------------------+
