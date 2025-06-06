@@ -200,6 +200,7 @@ async def get_monthly_summary(
         raise HTTPException(status_code=500, detail=f"月次サマリー取得に失敗しました: {str(e)}")
 
 @router.get("/performance/live-metrics")
+@router.post("/performance/live-metrics")
 async def get_live_metrics():
     """
     リアルタイムパフォーマンス指標を取得

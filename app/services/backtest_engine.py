@@ -11,14 +11,14 @@ import logging
 
 from app.core.database import get_db_connection
 from app.services.technical_analysis import TechnicalAnalysisService
-from app.services.risk_management import RiskManagementService
+from app.services.risk_management import RiskManager
 
 logger = logging.getLogger(__name__)
 
 class BacktestEngine:
     def __init__(self):
         self.technical_service = TechnicalAnalysisService()
-        self.risk_service = RiskManagementService()
+        self.risk_service = RiskManager()
         
     async def run_backtest(
         self,

@@ -402,4 +402,9 @@ class DatabaseManager:
             ''', (level, message, module))
             conn.commit()
 
+# グローバルインスタンス
 db_manager = DatabaseManager()
+
+def get_db_connection():
+    """データベース接続を取得する関数"""
+    return sqlite3.connect(db_manager.db_path)

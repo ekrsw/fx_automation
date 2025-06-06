@@ -671,3 +671,59 @@
 2025-06-06 22:53:59,859 - watchfiles.main - INFO - 1 change detected
 2025-06-06 22:54:41,060 - watchfiles.main - INFO - 1 change detected
 2025-06-06 22:55:07,995 - watchfiles.main - INFO - 1 change detected
+2025-06-06 22:56:05,973 - watchfiles.main - INFO - 63 changes detected
+2025-06-06 22:56:16,365 - watchfiles.main - INFO - 45 changes detected
+2025-06-06 22:56:25,150 - watchfiles.main - INFO - 7 changes detected
+2025-06-06 23:00:36,981 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:00:37,717 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:00:37,758 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:00:37,772 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 23:01:21,903 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 23:01:22,069 - app.api.market_data - INFO - Received market data for EURUSD: 100 records
+2025-06-06 23:01:22,225 - app.api.market_data - INFO - Received market data for GBPUSD: 100 records
+2025-06-06 23:01:22,384 - app.api.market_data - INFO - Received market data for AUDUSD: 100 records
+2025-06-06 23:01:22,552 - app.api.market_data - INFO - Received market data for USDCHF: 100 records
+2025-06-06 23:01:22,718 - app.api.market_data - INFO - Received market data for USDCAD: 100 records
+2025-06-06 23:01:22,841 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,848 - app.services.technical_analysis - INFO - ZigZag calculated: 105 points with 0.1% deviation
+2025-06-06 23:01:22,848 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,848 - app.services.multi_pair_manager - INFO - Analysis completed for USDJPY: Score {'total_score': 37, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 5, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 105}}
+2025-06-06 23:01:22,864 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,872 - app.services.technical_analysis - INFO - ZigZag calculated: 61 points with 0.1% deviation
+2025-06-06 23:01:22,872 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,872 - app.services.multi_pair_manager - INFO - Analysis completed for EURUSD: Score {'total_score': 37, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 5, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 61}}
+2025-06-06 23:01:22,888 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,894 - app.services.technical_analysis - INFO - ZigZag calculated: 53 points with 0.1% deviation
+2025-06-06 23:01:22,894 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,894 - app.services.multi_pair_manager - INFO - Analysis completed for GBPUSD: Score {'total_score': 36, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 4, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 53}}
+2025-06-06 23:01:22,908 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,914 - app.services.technical_analysis - INFO - ZigZag calculated: 77 points with 0.1% deviation
+2025-06-06 23:01:22,914 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,914 - app.services.multi_pair_manager - INFO - Analysis completed for AUDUSD: Score {'total_score': 36, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 4, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 77}}
+2025-06-06 23:01:22,928 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,934 - app.services.technical_analysis - INFO - ZigZag calculated: 80 points with 0.1% deviation
+2025-06-06 23:01:22,934 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,934 - app.services.multi_pair_manager - INFO - Analysis completed for USDCHF: Score {'total_score': 36, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 4, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 80}}
+2025-06-06 23:01:22,949 - app.services.technical_analysis - INFO - Detected 0 swing points from 200 bars
+2025-06-06 23:01:22,954 - app.services.technical_analysis - INFO - ZigZag calculated: 49 points with 0.1% deviation
+2025-06-06 23:01:22,954 - app.services.technical_analysis - INFO - Technical analysis completed for 200 data points
+2025-06-06 23:01:22,954 - app.services.multi_pair_manager - INFO - Analysis completed for USDCAD: Score {'total_score': 36, 'trend_strength': 0, 'elliott_position': 20, 'technical_accuracy': 12, 'market_environment': 4, 'breakdown': {'trend_direction': 'insufficient_data', 'swing_points_count': 0, 'zigzag_points_count': 49}}
+2025-06-06 23:01:22,954 - app.services.multi_pair_manager - INFO - Selected 0 pairs for trading: []
+2025-06-06 23:01:22,954 - app.services.multi_pair_manager - INFO - Multi-pair analysis completed: 6 pairs analyzed, 0 selected for trading
+2025-06-06 23:03:18,272 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:03:19,001 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:03:19,037 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:03:19,050 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 23:05:51,498 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:06:22,378 - app.api.market_data - INFO - Received market data for USDJPY: 100 records
+2025-06-06 23:06:22,532 - app.api.market_data - INFO - Received market data for EURUSD: 100 records
+2025-06-06 23:06:22,692 - app.api.market_data - INFO - Received market data for GBPUSD: 100 records
+2025-06-06 23:06:22,846 - app.api.market_data - INFO - Received market data for AUDUSD: 100 records
+2025-06-06 23:06:23,007 - app.api.market_data - INFO - Received market data for USDCHF: 100 records
+2025-06-06 23:06:23,181 - app.api.market_data - INFO - Received market data for USDCAD: 100 records
+2025-06-06 23:08:05,777 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-06 23:08:52,803 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:08:53,207 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:08:53,234 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-06 23:08:53,245 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-06 23:08:53,290 - watchfiles.main - INFO - 1 change detected
