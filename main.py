@@ -10,6 +10,10 @@ from app.api.trading import router as trading_router
 from app.api.reports import router as reports_router
 from app.api.multi_pair import router as multi_pair_router
 from app.api.signals import router as signals_router
+from app.api.alerts import router as alerts_router
+from app.api.backtest import router as backtest_router
+from app.api.optimization import router as optimization_router
+from app.api.performance import router as performance_router
 
 setup_logging()
 logger = get_logger()
@@ -35,6 +39,10 @@ app.include_router(trading_router)
 app.include_router(reports_router)
 app.include_router(multi_pair_router)
 app.include_router(signals_router)
+app.include_router(alerts_router, prefix="/api/v1")
+app.include_router(backtest_router, prefix="/api/v1")
+app.include_router(optimization_router, prefix="/api/v1")
+app.include_router(performance_router, prefix="/api/v1")
 
 @app.on_event("startup")
 async def startup_event():

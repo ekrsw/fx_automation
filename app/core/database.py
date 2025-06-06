@@ -90,6 +90,138 @@ class DatabaseManager:
                 ON trades(symbol, status)
             ''')
             
+            # アラート関連テーブル
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS alerts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    type TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    symbol TEXT,
+                    severity INTEGER NOT NULL,
+                    status TEXT DEFAULT 'active',
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                    acknowledged_at TEXT,
+                    resolved_at TEXT,
+                    metadata TEXT
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS alert_rules (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    condition TEXT NOT NULL,
+                    alert_type TEXT NOT NULL,
+                    severity INTEGER NOT NULL,
+                    is_active INTEGER DEFAULT 1,
+                    cooldown_minutes INTEGER DEFAULT 5,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS alert_statistics (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    date TEXT NOT NULL,
+                    alert_type TEXT NOT NULL,
+                    count INTEGER DEFAULT 0,
+                    total_severity INTEGER DEFAULT 0,
+                    UNIQUE(date, alert_type)
+                )
+            ''')
+            
+            # バックテスト関連テーブル
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS backtest_results (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    symbol TEXT NOT NULL,
+                    start_date TEXT NOT NULL,
+                    end_date TEXT NOT NULL,
+                    parameters TEXT NOT NULL,
+                    total_trades INTEGER NOT NULL,
+                    winning_trades INTEGER NOT NULL,
+                    total_profit REAL NOT NULL,
+                    max_drawdown REAL NOT NULL,
+                    sharpe_ratio REAL,
+                    win_rate REAL NOT NULL,
+                    profit_factor REAL,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS backtest_trades (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    backtest_id INTEGER NOT NULL,
+                    symbol TEXT NOT NULL,
+                    side TEXT NOT NULL,
+                    entry_time TEXT NOT NULL,
+                    exit_time TEXT NOT NULL,
+                    entry_price REAL NOT NULL,
+                    exit_price REAL NOT NULL,
+                    quantity REAL NOT NULL,
+                    profit_loss REAL NOT NULL,
+                    FOREIGN KEY (backtest_id) REFERENCES backtest_results (id)
+                )
+            ''')
+            
+            # インデックス追加
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_alerts_status_type 
+                ON alerts(status, type)
+            ''')
+            
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_backtest_results_symbol 
+                ON backtest_results(symbol, created_at)
+            ''')
+            
+            # 最適化関連テーブル
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS optimization_jobs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    symbol TEXT NOT NULL,
+                    start_date TEXT NOT NULL,
+                    end_date TEXT NOT NULL,
+                    optimization_type TEXT NOT NULL,
+                    objective_function TEXT NOT NULL,
+                    max_iterations INTEGER NOT NULL,
+                    parameters TEXT NOT NULL,
+                    status TEXT DEFAULT 'running',
+                    best_parameters TEXT,
+                    best_score REAL,
+                    total_iterations INTEGER DEFAULT 0,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                    completed_at TEXT
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS optimization_history (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    optimization_id INTEGER NOT NULL,
+                    iteration INTEGER NOT NULL,
+                    parameters TEXT NOT NULL,
+                    score REAL NOT NULL,
+                    metrics TEXT,
+                    FOREIGN KEY (optimization_id) REFERENCES optimization_jobs (id)
+                )
+            ''')
+            
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_optimization_jobs_symbol 
+                ON optimization_jobs(symbol, created_at)
+            ''')
+            
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_optimization_history_job 
+                ON optimization_history(optimization_id, iteration)
+            ''')
+            
             conn.commit()
             logger.info("Database initialized successfully")
     

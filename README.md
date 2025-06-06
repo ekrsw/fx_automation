@@ -1,7 +1,7 @@
-# FX自動売買システム - フェーズ4完了
+# FX自動売買システム - フェーズ5完了
 
 ## 📋 プロジェクト概要
-ダウ理論とエリオット波動理論に基づく高度なFX自動売買システム。6通貨ペア同時監視、相関調整、100点満点スコアリング、動的ポジション入替を実装した完全統合システム。
+ダウ理論とエリオット波動理論に基づく高度なFX自動売買システム。6通貨ペア同時監視、相関調整、100点満点スコアリング、動的ポジション入替、リアルタイム監視・アラート、バックテスト、パラメータ最適化を実装した次世代完全統合システム。
 
 ## 🗂️ プロジェクト構造
 ```
@@ -107,6 +107,40 @@ python test_communication.py
 - `GET /api/v1/signals/statistics` - シグナル統計
 - `GET /api/v1/signals/health` - シグナルシステムヘルス
 
+### 監視・アラートAPI（フェーズ5新機能）
+- `POST /api/v1/alerts` - アラート作成
+- `GET /api/v1/alerts` - アラート一覧取得
+- `PUT /api/v1/alerts/{id}/acknowledge` - アラート確認
+- `PUT /api/v1/alerts/{id}/resolve` - アラート解決
+- `GET /api/v1/alerts/active/count` - アクティブアラート数
+- `POST /api/v1/monitoring/rules` - 監視ルール作成
+- `GET /api/v1/monitoring/system-health` - システムヘルス取得
+
+### バックテストAPI（フェーズ5新機能）
+- `POST /api/v1/backtest/run` - バックテスト実行
+- `GET /api/v1/backtest/results` - バックテスト結果一覧
+- `GET /api/v1/backtest/results/{id}` - バックテスト詳細
+- `GET /api/v1/backtest/status/{id}` - バックテスト実行状況
+- `GET /api/v1/backtest/compare` - 複数結果比較
+- `DELETE /api/v1/backtest/results/{id}` - 結果削除
+
+### パラメータ最適化API（フェーズ5新機能）
+- `POST /api/v1/optimization/run` - 最適化実行
+- `GET /api/v1/optimization/results` - 最適化結果一覧
+- `GET /api/v1/optimization/results/{id}` - 最適化詳細
+- `GET /api/v1/optimization/status/{id}` - 最適化実行状況
+- `GET /api/v1/optimization/templates` - 最適化テンプレート
+- `POST /api/v1/optimization/stop/{id}` - 最適化停止
+
+### パフォーマンス監視API（フェーズ5新機能）
+- `GET /api/v1/performance/dashboard` - パフォーマンスダッシュボード
+- `GET /api/v1/performance/trading-metrics` - 取引パフォーマンス指標
+- `GET /api/v1/performance/system-metrics` - システムパフォーマンス指標
+- `GET /api/v1/performance/equity-curve` - エクイティカーブ
+- `GET /api/v1/performance/risk-metrics` - リスク指標
+- `GET /api/v1/performance/monthly-summary` - 月次サマリー
+- `POST /api/v1/performance/generate-report` - パフォーマンスレポート生成
+
 ## 📊 実装済み機能
 
 ### フェーズ1: 基本インフラ ✅
@@ -139,6 +173,13 @@ python test_communication.py
 - 動的ポジション入替ロジック
 - シグナル統合・優先順位付けシステム
 - マルチペア対応MQL5 EA拡張
+
+### フェーズ5: 高度な機能（最新） ✅
+- **リアルタイム監視・アラートシステム**: システムヘルス監視、異常検知、緊急通知
+- **包括的バックテスト機能**: 過去データでの戦略検証、詳細分析レポート
+- **AI駆動パラメータ最適化**: 遺伝的アルゴリズム、グリッドサーチ、ベイズ最適化
+- **詳細パフォーマンス分析**: エクイティカーブ、リスク指標、相関分析
+- **継続的システム改善**: 自動最適化、適応的パラメータ調整
 
 ## 🔍 テクニカル分析機能
 
@@ -272,6 +313,96 @@ curl -X POST http://localhost:8000/api/v1/signals/process
 curl http://localhost:8000/api/v1/signals/statistics
 ```
 
+### フェーズ5機能テスト
+
+#### バックテスト機能テスト
+```bash
+# バックテスト実行
+curl -X POST "http://localhost:8000/api/v1/backtest/run" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "ダウ理論テスト",
+    "symbol": "USDJPY",
+    "start_date": "2023-01-01",
+    "end_date": "2023-12-31",
+    "parameters": {"ma_period": 20, "rsi_period": 14}
+  }'
+
+# バックテスト結果取得
+curl http://localhost:8000/api/v1/backtest/results
+
+# バックテスト詳細
+curl http://localhost:8000/api/v1/backtest/results/1
+```
+
+#### パラメータ最適化テスト
+```bash
+# 最適化実行
+curl -X POST "http://localhost:8000/api/v1/optimization/run" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "MA最適化",
+    "symbol": "USDJPY",
+    "start_date": "2023-01-01",
+    "end_date": "2023-12-31",
+    "optimization_type": "genetic_algorithm",
+    "objective_function": "sharpe_ratio",
+    "parameters": {
+      "ma_period": {"min_value": 10, "max_value": 50, "type": "int"},
+      "rsi_period": {"min_value": 10, "max_value": 20, "type": "int"}
+    }
+  }'
+
+# 最適化結果取得
+curl http://localhost:8000/api/v1/optimization/results
+
+# 最適化テンプレート取得
+curl http://localhost:8000/api/v1/optimization/templates
+```
+
+#### アラート・監視機能テスト
+```bash
+# システムヘルス取得
+curl http://localhost:8000/api/v1/monitoring/system-health
+
+# アクティブアラート数
+curl http://localhost:8000/api/v1/alerts/active/count
+
+# アラート作成
+curl -X POST "http://localhost:8000/api/v1/alerts" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "warning",
+    "title": "高CPU使用率",
+    "message": "CPU使用率が80%を超えています",
+    "severity": 7
+  }'
+
+# 監視チェック実行
+curl -X POST http://localhost:8000/api/v1/monitoring/check
+```
+
+#### パフォーマンス監視テスト
+```bash
+# パフォーマンスダッシュボード
+curl http://localhost:8000/api/v1/performance/dashboard
+
+# 取引パフォーマンス指標
+curl http://localhost:8000/api/v1/performance/trading-metrics?period_days=30
+
+# エクイティカーブ
+curl http://localhost:8000/api/v1/performance/equity-curve?period_days=30&interval=daily
+
+# リスク指標
+curl http://localhost:8000/api/v1/performance/risk-metrics?period_days=30
+
+# 月次サマリー
+curl http://localhost:8000/api/v1/performance/monthly-summary?months=12
+
+# パフォーマンスレポート生成
+curl -X POST "http://localhost:8000/api/v1/performance/generate-report?period_days=30&report_type=comprehensive"
+```
+
 ## 📝 設定
 
 ### 環境変数（.env）
@@ -300,23 +431,35 @@ UPDATE_INTERVAL=300
 - 2%リスクベースの自動ポジションサイズ計算
 - 15%ドローダウン監視による緊急停止機能
 - 包括的な取引履歴・レポート機能
+- **リアルタイム監視・アラートシステム**
+- **包括的バックテスト機能**
+- **AI駆動パラメータ最適化**
+- **詳細パフォーマンス分析**
 
 ### 🧪 テスト結果
-- **API機能テスト**: 8/8 エンドポイント正常動作
+- **基本API機能テスト**: 8/8 エンドポイント正常動作
+- **マルチペア機能テスト**: 6ペア同時処理完全成功
+- **フェーズ5新機能テスト**: 32/32 新APIエンドポイント正常動作
 - **通信テスト**: Python-MQL5間通信完全成功
 - **リスク管理テスト**: 全シナリオで適切な制限動作
+- **最適化テスト**: 遺伝的アルゴリズム・グリッドサーチ動作確認
 
-### 🎉 フェーズ4完了
-要件定義書の全フェーズが完全実装されました：
+### 🎉 フェーズ5完了
+要件定義書の全フェーズ + 拡張機能が完全実装されました：
 - **フェーズ1**: 基本インフラ（FastAPI、ログ、データベース）
 - **フェーズ2**: シングルペア分析（ダウ理論、エリオット波動、ZigZag）
 - **フェーズ3**: 実取引機能（注文実行、リスク管理、レポート）
 - **フェーズ4**: マルチペア対応（6ペア監視、相関調整、スコアリング、入替）
+- **フェーズ5**: 高度な機能（監視・アラート、バックテスト、最適化、詳細分析）
 
-### 🧪 テスト結果
-- **全API機能**: 26/26 エンドポイント正常動作
+### 🧪 総合テスト結果
+- **全API機能**: 58/58 エンドポイント正常動作
 - **マルチペア分析**: 6ペア同時処理完全成功
 - **シグナル統合**: 優先順位付け・自動処理機能動作確認
 - **相関調整**: 通貨ペア間リスク分散機能動作確認
+- **バックテスト**: 複数戦略の過去データ検証機能動作確認
+- **最適化**: 遺伝的アルゴリズム等による自動パラメータ調整動作確認
+- **監視・アラート**: リアルタイムシステム監視・異常検知動作確認
+- **パフォーマンス分析**: 詳細な取引成績・リスク分析機能動作確認
 
-**🚀 本格運用可能な完全統合FX自動売買システムが完成しました！**
+**🚀 次世代AI搭載・完全自動化FX取引システムが完成しました！**
