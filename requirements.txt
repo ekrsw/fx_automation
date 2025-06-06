@@ -1,0 +1,10 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.3
+pydantic==2.11.5
+pydantic-settings==2.9.1
+pandas==2.3.0
+numpy==2.2.6
+TA-Lib==0.6.3
+websockets==15.0.1
+aiofiles==24.1.0
+python-multipart==0.0.20

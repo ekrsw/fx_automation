@@ -1,0 +1,11 @@
+# Python関連
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 環境設定
+.env
+
+# Mac関連
+.DS_Store
