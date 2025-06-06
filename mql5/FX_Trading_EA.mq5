@@ -13,14 +13,19 @@
 //--- Input parameters
 input string   API_URL = "http://127.0.0.1:8000";           // FastAPI Server URL
 input int      DATA_SEND_INTERVAL = 300;                     // データ送信間隔（秒）
-input string   TARGET_SYMBOL = "USDJPY";                     // 対象通貨ペア
+input bool     ENABLE_MULTI_PAIR = true;                     // マルチペア機能有効
 input bool     ENABLE_LOGGING = true;                        // ログ出力有効
 input int      TIMEFRAME_PERIOD = PERIOD_M5;                 // タイムフレーム
+input int      MAX_POSITIONS = 3;                            // 最大ポジション数
 
 //--- Global variables
 CTrade         trade;
 datetime       last_send_time = 0;
+datetime       last_multi_pair_check = 0;
 string         log_file = "FX_Trading_EA.log";
+
+// 監視対象通貨ペア
+string         currency_pairs[] = {"USDJPY", "EURUSD", "GBPUSD", "AUDUSD", "USDCHF", "USDCAD"};
 
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
@@ -29,7 +34,7 @@ int OnInit()
 {
     Print("=== FX Trading EA Starting ===");
     Print("API URL: ", API_URL);
-    Print("Target Symbol: ", TARGET_SYMBOL);
+    Print("Multi-Pair Mode: ", ENABLE_MULTI_PAIR ? "Enabled" : "Disabled");
     Print("Send Interval: ", DATA_SEND_INTERVAL, " seconds");
     
     // ファイルパス情報を表示
@@ -74,8 +79,22 @@ void OnTick()
     // 定期的なデータ送信チェック
     if(TimeCurrent() - last_send_time >= DATA_SEND_INTERVAL)
     {
-        SendMarketData();
+        if(ENABLE_MULTI_PAIR)
+        {
+            SendMultiPairData();
+        }
+        else
+        {
+            SendMarketData();
+        }
         last_send_time = TimeCurrent();
+    }
+    
+    // マルチペア推奨チェック（10分間隔）
+    if(ENABLE_MULTI_PAIR && TimeCurrent() - last_multi_pair_check >= 600)
+    {
+        CheckMultiPairRecommendations();
+        last_multi_pair_check = TimeCurrent();
     }
 }
 
@@ -124,22 +143,22 @@ bool TestConnection()
 //+------------------------------------------------------------------+
 void SendMarketData()
 {
-    // OHLC データ取得
+    // OHLC データ取得（USDJPY固定）
     MqlRates rates[];
-    int copied = CopyRates(TARGET_SYMBOL, (ENUM_TIMEFRAMES)TIMEFRAME_PERIOD, 0, 100, rates);
+    int copied = CopyRates("USDJPY", (ENUM_TIMEFRAMES)TIMEFRAME_PERIOD, 0, 100, rates);
     
     if(copied <= 0)
     {
-        Print("ERROR: Failed to get market data for ", TARGET_SYMBOL);
+        Print("ERROR: Failed to get market data for USDJPY");
         WriteLog("ERROR: Failed to get market data");
         return;
     }
     
     // JSON データ構築
-    string json_data = BuildMarketDataJSON(rates, copied);
+    string json_data = BuildMarketDataJSON("USDJPY", rates, copied);
     
     // HTTP POST送信
-    if(SendHTTPRequest(json_data))
+    if(SendHTTPRequest(json_data, "/api/v1/market-data"))
     {
         Print("Market data sent successfully. Records: ", copied);
         WriteLog("Market data sent: " + IntegerToString(copied) + " records");
@@ -152,12 +171,94 @@ void SendMarketData()
 }
 
 //+------------------------------------------------------------------+
+//| マルチペア市場データ送信関数                                    |
+//+------------------------------------------------------------------+
+void SendMultiPairData()
+{
+    int total_sent = 0;
+    
+    for(int i = 0; i < ArraySize(currency_pairs); i++)
+    {
+        string symbol = currency_pairs[i];
+        
+        // シンボルが利用可能かチェック
+        if(!SymbolSelect(symbol, true))
+        {
+            Print("WARNING: Symbol ", symbol, " not available");
+            continue;
+        }
+        
+        // OHLC データ取得
+        MqlRates rates[];
+        int copied = CopyRates(symbol, (ENUM_TIMEFRAMES)TIMEFRAME_PERIOD, 0, 100, rates);
+        
+        if(copied <= 0)
+        {
+            Print("WARNING: Failed to get market data for ", symbol);
+            continue;
+        }
+        
+        // JSON データ構築
+        string json_data = BuildMarketDataJSON(symbol, rates, copied);
+        
+        // HTTP POST送信
+        if(SendHTTPRequest(json_data, "/api/v1/market-data"))
+        {
+            total_sent++;
+            Print("Market data sent for ", symbol, ": ", copied, " records");
+        }
+        else
+        {
+            Print("ERROR: Failed to send market data for ", symbol);
+        }
+        
+        // 短い間隔を置く
+        Sleep(100);
+    }
+    
+    WriteLog("Multi-pair data sent: " + IntegerToString(total_sent) + "/" + IntegerToString(ArraySize(currency_pairs)) + " pairs");
+}
+
+//+------------------------------------------------------------------+
+//| マルチペア推奨チェック関数                                      |
+//+------------------------------------------------------------------+
+void CheckMultiPairRecommendations()
+{
+    string url = API_URL + "/api/v1/multi-pair/recommendations";
+    string headers = "Content-Type: application/json\r\n";
+    
+    char post_data[];
+    char result[];
+    string result_headers;
+    
+    Print("Checking multi-pair recommendations...");
+    
+    int timeout = 10000;
+    int res = WebRequest("GET", url, headers, timeout, post_data, result, result_headers);
+    
+    if(res == 200)
+    {
+        string response = CharArrayToString(result);
+        Print("Multi-pair recommendations received: ", response);
+        WriteLog("Multi-pair recommendations: " + response);
+        
+        // TODO: レスポンスを解析して自動取引実行
+        // ProcessMultiPairRecommendations(response);
+    }
+    else
+    {
+        Print("Failed to get multi-pair recommendations. HTTP code: ", res);
+        WriteLog("ERROR: Multi-pair recommendations failed: " + IntegerToString(res));
+    }
+}
+
+//+------------------------------------------------------------------+
 //| JSON データ構築関数                                             |
 //+------------------------------------------------------------------+
-string BuildMarketDataJSON(MqlRates &rates[], int count)
+string BuildMarketDataJSON(string symbol, MqlRates &rates[], int count)
 {
     string json = "{";
-    json += "\"symbol\":\"" + TARGET_SYMBOL + "\",";
+    json += "\"symbol\":\"" + symbol + "\",";
     json += "\"data\":[";
     
     for(int i = 0; i < count; i++)
@@ -165,7 +266,7 @@ string BuildMarketDataJSON(MqlRates &rates[], int count)
         if(i > 0) json += ",";
         
         json += "{";
-        json += "\"symbol\":\"" + TARGET_SYMBOL + "\",";
+        json += "\"symbol\":\"" + symbol + "\",";
         json += "\"timestamp\":\"" + TimeToString(rates[i].time, TIME_DATE|TIME_SECONDS) + "\",";
         json += "\"open\":" + DoubleToString(rates[i].open, 5) + ",";
         json += "\"high\":" + DoubleToString(rates[i].high, 5) + ",";
@@ -182,9 +283,9 @@ string BuildMarketDataJSON(MqlRates &rates[], int count)
 //+------------------------------------------------------------------+
 //| HTTP リクエスト送信関数                                         |
 //+------------------------------------------------------------------+
-bool SendHTTPRequest(string json_data)
+bool SendHTTPRequest(string json_data, string endpoint)
 {
-    string url = API_URL + "/api/v1/market-data";
+    string url = API_URL + endpoint;
     string headers = "Content-Type: application/json\r\n";
     
     char post_data[];
@@ -199,12 +300,12 @@ bool SendHTTPRequest(string json_data)
     if(res == 200)
     {
         string response = CharArrayToString(result);
-        Print("HTTP Response: ", response);
+        // Print("HTTP Response: ", response);  // レスポンス出力を抑制
         return true;
     }
     else
     {
-        Print("HTTP Error: ", res);
+        Print("HTTP Error: ", res, " for ", endpoint);
         Print("Headers: ", result_headers);
         return false;
     }
@@ -240,13 +341,13 @@ void WriteLog(string message)
 //+------------------------------------------------------------------+
 //| 現在価格情報取得関数                                            |
 //+------------------------------------------------------------------+
-string GetCurrentPriceInfo()
+string GetCurrentPriceInfo(string symbol = "USDJPY")
 {
-    double bid = SymbolInfoDouble(TARGET_SYMBOL, SYMBOL_BID);
-    double ask = SymbolInfoDouble(TARGET_SYMBOL, SYMBOL_ASK);
+    double bid = SymbolInfoDouble(symbol, SYMBOL_BID);
+    double ask = SymbolInfoDouble(symbol, SYMBOL_ASK);
     double spread = ask - bid;
     
-    string info = "Symbol: " + TARGET_SYMBOL;
+    string info = "Symbol: " + symbol;
     info += ", Bid: " + DoubleToString(bid, 5);
     info += ", Ask: " + DoubleToString(ask, 5);
     info += ", Spread: " + DoubleToString(spread * MathPow(10, 5), 1) + " pips";
