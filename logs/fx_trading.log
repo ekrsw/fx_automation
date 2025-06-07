@@ -4497,3 +4497,549 @@
 2025-06-07 06:35:50,625 - watchfiles.main - INFO - 29 changes detected
 2025-06-07 06:35:58,265 - watchfiles.main - INFO - 7 changes detected
 2025-06-07 07:00:21,271 - watchfiles.main - INFO - 1 change detected
+2025-06-07 07:02:42,287 - watchfiles.main - INFO - 7 changes detected
+2025-06-07 07:02:49,631 - watchfiles.main - INFO - 25 changes detected
+2025-06-07 07:02:54,966 - watchfiles.main - INFO - 7 changes detected
+2025-06-07 13:36:34,237 - watchfiles.main - INFO - 2 changes detected
+2025-06-07 13:36:45,184 - watchfiles.main - INFO - 2 changes detected
+2025-06-07 13:45:09,915 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:10,026 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-07 13:45:10,399 - watchfiles.main - INFO - 2 changes detected
+2025-06-07 13:45:10,596 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:10,634 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:10,646 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-07 13:45:10,759 - watchfiles.main - INFO - 4 changes detected
+2025-06-07 13:45:23,242 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:23,374 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-07 13:45:23,749 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:23,775 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:23,802 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:23,814 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-07 13:45:24,111 - watchfiles.main - INFO - 4 changes detected
+2025-06-07 13:45:34,318 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:34,521 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-07 13:45:34,886 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:34,968 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:34,999 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:35,012 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-07 13:45:35,251 - watchfiles.main - INFO - 4 changes detected
+2025-06-07 13:45:48,578 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:48,750 - fx_trading - INFO - Shutting down FX Trading System
+2025-06-07 13:45:49,124 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:45:49,157 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:49,184 - fx_trading - INFO - Logging initialized - Level: INFO
+2025-06-07 13:45:49,196 - fx_trading - INFO - Starting FX Trading System v1.0.0
+2025-06-07 13:45:49,490 - watchfiles.main - INFO - 4 changes detected
+2025-06-07 13:46:43,562 - app.api.backtest - INFO - バックテスト開始: スイングトレード戦略テスト (USDJPY)
+2025-06-07 13:46:43,562 - app.api.backtest - INFO - バックテスト実行開始: ID=38
+2025-06-07 13:46:43,595 - app.services.backtest_engine - INFO - データフィルタリング前: 9202件
+2025-06-07 13:46:43,595 - app.services.backtest_engine - INFO - 要求期間: 2023-01-01 - 2023-01-31
+2025-06-07 13:46:43,595 - app.services.backtest_engine - INFO - 変換後期間: 2023-01-01 00:00:00 - 2023-01-31 00:00:00
+2025-06-07 13:46:43,596 - app.services.backtest_engine - INFO - データ範囲: 2023-01-01 00:00:00 - 2025-06-06 23:40:00
+2025-06-07 13:46:43,597 - app.services.backtest_engine - INFO - フィルタリング後: 100件
+2025-06-07 13:46:43,597 - app.services.backtest_engine - INFO - 市場データ取得完了: 100件 (USDJPY)
+2025-06-07 13:46:43,619 - app.services.backtest_engine - INFO - バックテスト開始インデックス: 10, 総データ数: 100
+2025-06-07 13:46:43,628 - app.services.technical_analysis - INFO - Detected 6 swing points from 50 bars
+2025-06-07 13:46:43,630 - app.services.technical_analysis - INFO - ZigZag calculated: 47 points with 0.1% deviation
+2025-06-07 13:46:43,630 - app.services.technical_analysis - INFO - Technical analysis completed for 50 data points
+2025-06-07 13:46:43,635 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:46:43,636 - app.services.technical_analysis - INFO - Detected 6 swing points from 51 bars
+2025-06-07 13:46:43,638 - app.services.technical_analysis - INFO - ZigZag calculated: 48 points with 0.1% deviation
+2025-06-07 13:46:43,638 - app.services.technical_analysis - INFO - Technical analysis completed for 51 data points
+2025-06-07 13:46:43,644 - app.services.technical_analysis - INFO - Detected 6 swing points from 52 bars
+2025-06-07 13:46:43,646 - app.services.technical_analysis - INFO - ZigZag calculated: 49 points with 0.1% deviation
+2025-06-07 13:46:43,646 - app.services.technical_analysis - INFO - Technical analysis completed for 52 data points
+2025-06-07 13:46:43,651 - app.services.technical_analysis - INFO - Detected 6 swing points from 53 bars
+2025-06-07 13:46:43,654 - app.services.technical_analysis - INFO - ZigZag calculated: 50 points with 0.1% deviation
+2025-06-07 13:46:43,654 - app.services.technical_analysis - INFO - Technical analysis completed for 53 data points
+2025-06-07 13:46:43,659 - app.services.technical_analysis - INFO - Detected 6 swing points from 54 bars
+2025-06-07 13:46:43,661 - app.services.technical_analysis - INFO - ZigZag calculated: 51 points with 0.1% deviation
+2025-06-07 13:46:43,661 - app.services.technical_analysis - INFO - Technical analysis completed for 54 data points
+2025-06-07 13:46:43,667 - app.services.technical_analysis - INFO - Detected 6 swing points from 55 bars
+2025-06-07 13:46:43,670 - app.services.technical_analysis - INFO - ZigZag calculated: 52 points with 0.1% deviation
+2025-06-07 13:46:43,670 - app.services.technical_analysis - INFO - Technical analysis completed for 55 data points
+2025-06-07 13:46:43,676 - app.services.technical_analysis - INFO - Detected 6 swing points from 56 bars
+2025-06-07 13:46:43,678 - app.services.technical_analysis - INFO - ZigZag calculated: 53 points with 0.1% deviation
+2025-06-07 13:46:43,678 - app.services.technical_analysis - INFO - Technical analysis completed for 56 data points
+2025-06-07 13:46:43,684 - app.services.technical_analysis - INFO - Detected 7 swing points from 57 bars
+2025-06-07 13:46:43,686 - app.services.technical_analysis - INFO - ZigZag calculated: 54 points with 0.1% deviation
+2025-06-07 13:46:43,686 - app.services.technical_analysis - INFO - Technical analysis completed for 57 data points
+2025-06-07 13:46:43,692 - app.services.technical_analysis - INFO - Detected 7 swing points from 58 bars
+2025-06-07 13:46:43,695 - app.services.technical_analysis - INFO - ZigZag calculated: 55 points with 0.1% deviation
+2025-06-07 13:46:43,695 - app.services.technical_analysis - INFO - Technical analysis completed for 58 data points
+2025-06-07 13:46:43,701 - app.services.technical_analysis - INFO - Detected 7 swing points from 59 bars
+2025-06-07 13:46:43,704 - app.services.technical_analysis - INFO - ZigZag calculated: 56 points with 0.1% deviation
+2025-06-07 13:46:43,704 - app.services.technical_analysis - INFO - Technical analysis completed for 59 data points
+2025-06-07 13:46:43,710 - app.services.technical_analysis - INFO - Detected 7 swing points from 60 bars
+2025-06-07 13:46:43,712 - app.services.technical_analysis - INFO - ZigZag calculated: 57 points with 0.1% deviation
+2025-06-07 13:46:43,713 - app.services.technical_analysis - INFO - Technical analysis completed for 60 data points
+2025-06-07 13:46:43,719 - app.services.technical_analysis - INFO - Detected 7 swing points from 61 bars
+2025-06-07 13:46:43,721 - app.services.technical_analysis - INFO - ZigZag calculated: 58 points with 0.1% deviation
+2025-06-07 13:46:43,721 - app.services.technical_analysis - INFO - Technical analysis completed for 61 data points
+2025-06-07 13:46:43,728 - app.services.technical_analysis - INFO - Detected 7 swing points from 62 bars
+2025-06-07 13:46:43,730 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:46:43,730 - app.services.technical_analysis - INFO - Technical analysis completed for 62 data points
+2025-06-07 13:46:43,736 - app.services.technical_analysis - INFO - Detected 7 swing points from 63 bars
+2025-06-07 13:46:43,739 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:46:43,739 - app.services.technical_analysis - INFO - Technical analysis completed for 63 data points
+2025-06-07 13:46:43,745 - app.services.technical_analysis - INFO - Detected 7 swing points from 64 bars
+2025-06-07 13:46:43,747 - app.services.technical_analysis - INFO - ZigZag calculated: 60 points with 0.1% deviation
+2025-06-07 13:46:43,747 - app.services.technical_analysis - INFO - Technical analysis completed for 64 data points
+2025-06-07 13:46:43,754 - app.services.technical_analysis - INFO - Detected 7 swing points from 65 bars
+2025-06-07 13:46:43,756 - app.services.technical_analysis - INFO - ZigZag calculated: 61 points with 0.1% deviation
+2025-06-07 13:46:43,756 - app.services.technical_analysis - INFO - Technical analysis completed for 65 data points
+2025-06-07 13:46:43,763 - app.services.technical_analysis - INFO - Detected 8 swing points from 66 bars
+2025-06-07 13:46:43,765 - app.services.technical_analysis - INFO - ZigZag calculated: 62 points with 0.1% deviation
+2025-06-07 13:46:43,765 - app.services.technical_analysis - INFO - Technical analysis completed for 66 data points
+2025-06-07 13:46:43,773 - app.services.technical_analysis - INFO - Detected 8 swing points from 67 bars
+2025-06-07 13:46:43,775 - app.services.technical_analysis - INFO - ZigZag calculated: 63 points with 0.1% deviation
+2025-06-07 13:46:43,775 - app.services.technical_analysis - INFO - Technical analysis completed for 67 data points
+2025-06-07 13:46:43,782 - app.services.technical_analysis - INFO - Detected 8 swing points from 68 bars
+2025-06-07 13:46:43,784 - app.services.technical_analysis - INFO - ZigZag calculated: 64 points with 0.1% deviation
+2025-06-07 13:46:43,784 - app.services.technical_analysis - INFO - Technical analysis completed for 68 data points
+2025-06-07 13:46:43,784 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:46:43,784 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 8, 'last_high': np.float64(145.29007), 'last_low': np.float64(143.5888), 'rsi': np.float64(57.10974613800763), 'atr': np.float64(0.3637871428571446)}
+2025-06-07 13:46:43,791 - app.services.technical_analysis - INFO - Detected 8 swing points from 69 bars
+2025-06-07 13:46:43,793 - app.services.technical_analysis - INFO - ZigZag calculated: 65 points with 0.1% deviation
+2025-06-07 13:46:43,793 - app.services.technical_analysis - INFO - Technical analysis completed for 69 data points
+2025-06-07 13:46:43,800 - app.services.technical_analysis - INFO - Detected 8 swing points from 70 bars
+2025-06-07 13:46:43,803 - app.services.technical_analysis - INFO - ZigZag calculated: 66 points with 0.1% deviation
+2025-06-07 13:46:43,803 - app.services.technical_analysis - INFO - Technical analysis completed for 70 data points
+2025-06-07 13:46:43,810 - app.services.technical_analysis - INFO - Detected 8 swing points from 71 bars
+2025-06-07 13:46:43,813 - app.services.technical_analysis - INFO - ZigZag calculated: 67 points with 0.1% deviation
+2025-06-07 13:46:43,813 - app.services.technical_analysis - INFO - Technical analysis completed for 71 data points
+2025-06-07 13:46:43,820 - app.services.technical_analysis - INFO - Detected 8 swing points from 72 bars
+2025-06-07 13:46:43,823 - app.services.technical_analysis - INFO - ZigZag calculated: 68 points with 0.1% deviation
+2025-06-07 13:46:43,823 - app.services.technical_analysis - INFO - Technical analysis completed for 72 data points
+2025-06-07 13:46:43,830 - app.services.technical_analysis - INFO - Detected 8 swing points from 73 bars
+2025-06-07 13:46:43,832 - app.services.technical_analysis - INFO - ZigZag calculated: 69 points with 0.1% deviation
+2025-06-07 13:46:43,832 - app.services.technical_analysis - INFO - Technical analysis completed for 73 data points
+2025-06-07 13:46:43,840 - app.services.technical_analysis - INFO - Detected 8 swing points from 74 bars
+2025-06-07 13:46:43,842 - app.services.technical_analysis - INFO - ZigZag calculated: 70 points with 0.1% deviation
+2025-06-07 13:46:43,843 - app.services.technical_analysis - INFO - Technical analysis completed for 74 data points
+2025-06-07 13:46:43,850 - app.services.technical_analysis - INFO - Detected 8 swing points from 75 bars
+2025-06-07 13:46:43,853 - app.services.technical_analysis - INFO - ZigZag calculated: 71 points with 0.1% deviation
+2025-06-07 13:46:43,853 - app.services.technical_analysis - INFO - Technical analysis completed for 75 data points
+2025-06-07 13:46:43,860 - app.services.technical_analysis - INFO - Detected 8 swing points from 76 bars
+2025-06-07 13:46:43,863 - app.services.technical_analysis - INFO - ZigZag calculated: 72 points with 0.1% deviation
+2025-06-07 13:46:43,863 - app.services.technical_analysis - INFO - Technical analysis completed for 76 data points
+2025-06-07 13:46:43,871 - app.services.technical_analysis - INFO - Detected 8 swing points from 77 bars
+2025-06-07 13:46:43,873 - app.services.technical_analysis - INFO - ZigZag calculated: 73 points with 0.1% deviation
+2025-06-07 13:46:43,873 - app.services.technical_analysis - INFO - Technical analysis completed for 77 data points
+2025-06-07 13:46:43,881 - app.services.technical_analysis - INFO - Detected 8 swing points from 78 bars
+2025-06-07 13:46:43,884 - app.services.technical_analysis - INFO - ZigZag calculated: 74 points with 0.1% deviation
+2025-06-07 13:46:43,884 - app.services.technical_analysis - INFO - Technical analysis completed for 78 data points
+2025-06-07 13:46:43,892 - app.services.technical_analysis - INFO - Detected 8 swing points from 79 bars
+2025-06-07 13:46:43,895 - app.services.technical_analysis - INFO - ZigZag calculated: 75 points with 0.1% deviation
+2025-06-07 13:46:43,895 - app.services.technical_analysis - INFO - Technical analysis completed for 79 data points
+2025-06-07 13:46:43,903 - app.services.technical_analysis - INFO - Detected 8 swing points from 80 bars
+2025-06-07 13:46:43,906 - app.services.technical_analysis - INFO - ZigZag calculated: 76 points with 0.1% deviation
+2025-06-07 13:46:43,906 - app.services.technical_analysis - INFO - Technical analysis completed for 80 data points
+2025-06-07 13:46:43,913 - app.services.technical_analysis - INFO - Detected 8 swing points from 81 bars
+2025-06-07 13:46:43,916 - app.services.technical_analysis - INFO - ZigZag calculated: 77 points with 0.1% deviation
+2025-06-07 13:46:43,916 - app.services.technical_analysis - INFO - Technical analysis completed for 81 data points
+2025-06-07 13:46:43,924 - app.services.technical_analysis - INFO - Detected 9 swing points from 82 bars
+2025-06-07 13:46:43,927 - app.services.technical_analysis - INFO - ZigZag calculated: 78 points with 0.1% deviation
+2025-06-07 13:46:43,927 - app.services.technical_analysis - INFO - Technical analysis completed for 82 data points
+2025-06-07 13:46:43,936 - app.services.technical_analysis - INFO - Detected 9 swing points from 83 bars
+2025-06-07 13:46:43,939 - app.services.technical_analysis - INFO - ZigZag calculated: 79 points with 0.1% deviation
+2025-06-07 13:46:43,939 - app.services.technical_analysis - INFO - Technical analysis completed for 83 data points
+2025-06-07 13:46:43,947 - app.services.technical_analysis - INFO - Detected 9 swing points from 84 bars
+2025-06-07 13:46:43,950 - app.services.technical_analysis - INFO - ZigZag calculated: 80 points with 0.1% deviation
+2025-06-07 13:46:43,950 - app.services.technical_analysis - INFO - Technical analysis completed for 84 data points
+2025-06-07 13:46:43,950 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:46:43,950 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(51.220798368502), 'atr': np.float64(0.451629285714286)}
+2025-06-07 13:46:43,950 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.44092
+2025-06-07 13:46:43,960 - app.services.technical_analysis - INFO - Detected 9 swing points from 85 bars
+2025-06-07 13:46:43,963 - app.services.technical_analysis - INFO - ZigZag calculated: 81 points with 0.1% deviation
+2025-06-07 13:46:43,963 - app.services.technical_analysis - INFO - Technical analysis completed for 85 data points
+2025-06-07 13:46:43,972 - app.services.technical_analysis - INFO - Detected 9 swing points from 86 bars
+2025-06-07 13:46:43,975 - app.services.technical_analysis - INFO - ZigZag calculated: 82 points with 0.1% deviation
+2025-06-07 13:46:43,975 - app.services.technical_analysis - INFO - Technical analysis completed for 86 data points
+2025-06-07 13:46:43,975 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:46:43,975 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(54.91218544038384), 'atr': np.float64(0.4182599999999996)}
+2025-06-07 13:46:43,975 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.52199
+2025-06-07 13:46:43,984 - app.services.technical_analysis - INFO - Detected 9 swing points from 87 bars
+2025-06-07 13:46:43,987 - app.services.technical_analysis - INFO - ZigZag calculated: 83 points with 0.1% deviation
+2025-06-07 13:46:43,987 - app.services.technical_analysis - INFO - Technical analysis completed for 87 data points
+2025-06-07 13:46:43,987 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.44092 -> 146.01172
+2025-06-07 13:46:43,987 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.52199 -> 146.01172
+2025-06-07 13:46:43,996 - app.services.technical_analysis - INFO - Detected 9 swing points from 88 bars
+2025-06-07 13:46:43,999 - app.services.technical_analysis - INFO - ZigZag calculated: 84 points with 0.1% deviation
+2025-06-07 13:46:43,999 - app.services.technical_analysis - INFO - Technical analysis completed for 88 data points
+2025-06-07 13:46:43,999 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.01172 -> 145.47140
+2025-06-07 13:46:43,999 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.01172 -> 145.47140
+2025-06-07 13:46:44,008 - app.services.technical_analysis - INFO - Detected 9 swing points from 89 bars
+2025-06-07 13:46:44,012 - app.services.technical_analysis - INFO - ZigZag calculated: 84 points with 0.1% deviation
+2025-06-07 13:46:44,012 - app.services.technical_analysis - INFO - Technical analysis completed for 89 data points
+2025-06-07 13:46:44,021 - app.services.technical_analysis - INFO - Detected 9 swing points from 90 bars
+2025-06-07 13:46:44,024 - app.services.technical_analysis - INFO - ZigZag calculated: 85 points with 0.1% deviation
+2025-06-07 13:46:44,024 - app.services.technical_analysis - INFO - Technical analysis completed for 90 data points
+2025-06-07 13:46:44,033 - app.services.technical_analysis - INFO - Detected 10 swing points from 91 bars
+2025-06-07 13:46:44,037 - app.services.technical_analysis - INFO - ZigZag calculated: 86 points with 0.1% deviation
+2025-06-07 13:46:44,037 - app.services.technical_analysis - INFO - Technical analysis completed for 91 data points
+2025-06-07 13:46:44,037 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.47140 -> 145.40681
+2025-06-07 13:46:44,037 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.47140 -> 145.40681
+2025-06-07 13:46:44,046 - app.services.technical_analysis - INFO - Detected 10 swing points from 92 bars
+2025-06-07 13:46:44,049 - app.services.technical_analysis - INFO - ZigZag calculated: 87 points with 0.1% deviation
+2025-06-07 13:46:44,049 - app.services.technical_analysis - INFO - Technical analysis completed for 92 data points
+2025-06-07 13:46:44,050 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.40681 -> 145.06688
+2025-06-07 13:46:44,050 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.40681 -> 145.06688
+2025-06-07 13:46:44,059 - app.services.technical_analysis - INFO - Detected 10 swing points from 93 bars
+2025-06-07 13:46:44,063 - app.services.technical_analysis - INFO - ZigZag calculated: 88 points with 0.1% deviation
+2025-06-07 13:46:44,063 - app.services.technical_analysis - INFO - Technical analysis completed for 93 data points
+2025-06-07 13:46:44,063 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.06688 -> 144.70304
+2025-06-07 13:46:44,063 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.06688 -> 144.70304
+2025-06-07 13:46:44,072 - app.services.technical_analysis - INFO - Detected 10 swing points from 94 bars
+2025-06-07 13:46:44,076 - app.services.technical_analysis - INFO - ZigZag calculated: 89 points with 0.1% deviation
+2025-06-07 13:46:44,076 - app.services.technical_analysis - INFO - Technical analysis completed for 94 data points
+2025-06-07 13:46:44,076 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.70304 -> 144.21872
+2025-06-07 13:46:44,076 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.70304 -> 144.21872
+2025-06-07 13:46:44,086 - app.services.technical_analysis - INFO - Detected 10 swing points from 95 bars
+2025-06-07 13:46:44,089 - app.services.technical_analysis - INFO - ZigZag calculated: 90 points with 0.1% deviation
+2025-06-07 13:46:44,089 - app.services.technical_analysis - INFO - Technical analysis completed for 95 data points
+2025-06-07 13:46:44,099 - app.services.technical_analysis - INFO - Detected 10 swing points from 96 bars
+2025-06-07 13:46:44,102 - app.services.technical_analysis - INFO - ZigZag calculated: 91 points with 0.1% deviation
+2025-06-07 13:46:44,102 - app.services.technical_analysis - INFO - Technical analysis completed for 96 data points
+2025-06-07 13:46:44,112 - app.services.technical_analysis - INFO - Detected 10 swing points from 97 bars
+2025-06-07 13:46:44,116 - app.services.technical_analysis - INFO - ZigZag calculated: 92 points with 0.1% deviation
+2025-06-07 13:46:44,116 - app.services.technical_analysis - INFO - Technical analysis completed for 97 data points
+2025-06-07 13:46:44,126 - app.services.technical_analysis - INFO - Detected 10 swing points from 98 bars
+2025-06-07 13:46:44,129 - app.services.technical_analysis - INFO - ZigZag calculated: 93 points with 0.1% deviation
+2025-06-07 13:46:44,129 - app.services.technical_analysis - INFO - Technical analysis completed for 98 data points
+2025-06-07 13:46:44,140 - app.services.technical_analysis - INFO - Detected 11 swing points from 99 bars
+2025-06-07 13:46:44,143 - app.services.technical_analysis - INFO - ZigZag calculated: 94 points with 0.1% deviation
+2025-06-07 13:46:44,143 - app.services.technical_analysis - INFO - Technical analysis completed for 99 data points
+2025-06-07 13:46:44,154 - app.services.technical_analysis - INFO - Detected 11 swing points from 100 bars
+2025-06-07 13:46:44,157 - app.services.technical_analysis - INFO - ZigZag calculated: 95 points with 0.1% deviation
+2025-06-07 13:46:44,157 - app.services.technical_analysis - INFO - Technical analysis completed for 100 data points
+2025-06-07 13:46:44,158 - app.api.backtest - INFO - バックテスト完了: ID=38, 取引数=3
+2025-06-07 13:46:44,261 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:47:41,164 - app.api.backtest - INFO - バックテスト開始: スイング戦略_3ヶ月テスト (USDJPY)
+2025-06-07 13:47:41,164 - app.api.backtest - INFO - バックテスト実行開始: ID=39
+2025-06-07 13:47:41,179 - app.services.backtest_engine - INFO - データフィルタリング前: 9202件
+2025-06-07 13:47:41,179 - app.services.backtest_engine - INFO - 要求期間: 2023-01-01 - 2023-03-31
+2025-06-07 13:47:41,179 - app.services.backtest_engine - INFO - 変換後期間: 2023-01-01 00:00:00 - 2023-03-31 00:00:00
+2025-06-07 13:47:41,179 - app.services.backtest_engine - INFO - データ範囲: 2023-01-01 00:00:00 - 2025-06-06 23:40:00
+2025-06-07 13:47:41,179 - app.services.backtest_engine - INFO - フィルタリング後: 100件
+2025-06-07 13:47:41,180 - app.services.backtest_engine - INFO - 市場データ取得完了: 100件 (USDJPY)
+2025-06-07 13:47:41,200 - app.services.backtest_engine - INFO - バックテスト開始インデックス: 10, 総データ数: 100
+2025-06-07 13:47:41,209 - app.services.technical_analysis - INFO - Detected 6 swing points from 50 bars
+2025-06-07 13:47:41,211 - app.services.technical_analysis - INFO - ZigZag calculated: 47 points with 0.1% deviation
+2025-06-07 13:47:41,211 - app.services.technical_analysis - INFO - Technical analysis completed for 50 data points
+2025-06-07 13:47:41,217 - app.services.technical_analysis - INFO - Detected 6 swing points from 51 bars
+2025-06-07 13:47:41,219 - app.services.technical_analysis - INFO - ZigZag calculated: 48 points with 0.1% deviation
+2025-06-07 13:47:41,219 - app.services.technical_analysis - INFO - Technical analysis completed for 51 data points
+2025-06-07 13:47:41,225 - app.services.technical_analysis - INFO - Detected 6 swing points from 52 bars
+2025-06-07 13:47:41,227 - app.services.technical_analysis - INFO - ZigZag calculated: 49 points with 0.1% deviation
+2025-06-07 13:47:41,227 - app.services.technical_analysis - INFO - Technical analysis completed for 52 data points
+2025-06-07 13:47:41,232 - app.services.technical_analysis - INFO - Detected 6 swing points from 53 bars
+2025-06-07 13:47:41,234 - app.services.technical_analysis - INFO - ZigZag calculated: 50 points with 0.1% deviation
+2025-06-07 13:47:41,234 - app.services.technical_analysis - INFO - Technical analysis completed for 53 data points
+2025-06-07 13:47:41,240 - app.services.technical_analysis - INFO - Detected 6 swing points from 54 bars
+2025-06-07 13:47:41,242 - app.services.technical_analysis - INFO - ZigZag calculated: 51 points with 0.1% deviation
+2025-06-07 13:47:41,242 - app.services.technical_analysis - INFO - Technical analysis completed for 54 data points
+2025-06-07 13:47:41,248 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:47:41,249 - app.services.technical_analysis - INFO - Detected 6 swing points from 55 bars
+2025-06-07 13:47:41,251 - app.services.technical_analysis - INFO - ZigZag calculated: 52 points with 0.1% deviation
+2025-06-07 13:47:41,251 - app.services.technical_analysis - INFO - Technical analysis completed for 55 data points
+2025-06-07 13:47:41,257 - app.services.technical_analysis - INFO - Detected 6 swing points from 56 bars
+2025-06-07 13:47:41,259 - app.services.technical_analysis - INFO - ZigZag calculated: 53 points with 0.1% deviation
+2025-06-07 13:47:41,259 - app.services.technical_analysis - INFO - Technical analysis completed for 56 data points
+2025-06-07 13:47:41,265 - app.services.technical_analysis - INFO - Detected 7 swing points from 57 bars
+2025-06-07 13:47:41,267 - app.services.technical_analysis - INFO - ZigZag calculated: 54 points with 0.1% deviation
+2025-06-07 13:47:41,267 - app.services.technical_analysis - INFO - Technical analysis completed for 57 data points
+2025-06-07 13:47:41,274 - app.services.technical_analysis - INFO - Detected 7 swing points from 58 bars
+2025-06-07 13:47:41,276 - app.services.technical_analysis - INFO - ZigZag calculated: 55 points with 0.1% deviation
+2025-06-07 13:47:41,276 - app.services.technical_analysis - INFO - Technical analysis completed for 58 data points
+2025-06-07 13:47:41,283 - app.services.technical_analysis - INFO - Detected 7 swing points from 59 bars
+2025-06-07 13:47:41,285 - app.services.technical_analysis - INFO - ZigZag calculated: 56 points with 0.1% deviation
+2025-06-07 13:47:41,285 - app.services.technical_analysis - INFO - Technical analysis completed for 59 data points
+2025-06-07 13:47:41,291 - app.services.technical_analysis - INFO - Detected 7 swing points from 60 bars
+2025-06-07 13:47:41,294 - app.services.technical_analysis - INFO - ZigZag calculated: 57 points with 0.1% deviation
+2025-06-07 13:47:41,294 - app.services.technical_analysis - INFO - Technical analysis completed for 60 data points
+2025-06-07 13:47:41,300 - app.services.technical_analysis - INFO - Detected 7 swing points from 61 bars
+2025-06-07 13:47:41,302 - app.services.technical_analysis - INFO - ZigZag calculated: 58 points with 0.1% deviation
+2025-06-07 13:47:41,302 - app.services.technical_analysis - INFO - Technical analysis completed for 61 data points
+2025-06-07 13:47:41,309 - app.services.technical_analysis - INFO - Detected 7 swing points from 62 bars
+2025-06-07 13:47:41,312 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:47:41,312 - app.services.technical_analysis - INFO - Technical analysis completed for 62 data points
+2025-06-07 13:47:41,319 - app.services.technical_analysis - INFO - Detected 7 swing points from 63 bars
+2025-06-07 13:47:41,322 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:47:41,322 - app.services.technical_analysis - INFO - Technical analysis completed for 63 data points
+2025-06-07 13:47:41,328 - app.services.technical_analysis - INFO - Detected 7 swing points from 64 bars
+2025-06-07 13:47:41,331 - app.services.technical_analysis - INFO - ZigZag calculated: 60 points with 0.1% deviation
+2025-06-07 13:47:41,331 - app.services.technical_analysis - INFO - Technical analysis completed for 64 data points
+2025-06-07 13:47:41,337 - app.services.technical_analysis - INFO - Detected 7 swing points from 65 bars
+2025-06-07 13:47:41,340 - app.services.technical_analysis - INFO - ZigZag calculated: 61 points with 0.1% deviation
+2025-06-07 13:47:41,340 - app.services.technical_analysis - INFO - Technical analysis completed for 65 data points
+2025-06-07 13:47:41,347 - app.services.technical_analysis - INFO - Detected 8 swing points from 66 bars
+2025-06-07 13:47:41,349 - app.services.technical_analysis - INFO - ZigZag calculated: 62 points with 0.1% deviation
+2025-06-07 13:47:41,349 - app.services.technical_analysis - INFO - Technical analysis completed for 66 data points
+2025-06-07 13:47:41,356 - app.services.technical_analysis - INFO - Detected 8 swing points from 67 bars
+2025-06-07 13:47:41,358 - app.services.technical_analysis - INFO - ZigZag calculated: 63 points with 0.1% deviation
+2025-06-07 13:47:41,358 - app.services.technical_analysis - INFO - Technical analysis completed for 67 data points
+2025-06-07 13:47:41,365 - app.services.technical_analysis - INFO - Detected 8 swing points from 68 bars
+2025-06-07 13:47:41,367 - app.services.technical_analysis - INFO - ZigZag calculated: 64 points with 0.1% deviation
+2025-06-07 13:47:41,367 - app.services.technical_analysis - INFO - Technical analysis completed for 68 data points
+2025-06-07 13:47:41,367 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:47:41,367 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 8, 'last_high': np.float64(145.29007), 'last_low': np.float64(143.5888), 'rsi': np.float64(57.10974613800763), 'atr': np.float64(0.3637871428571446)}
+2025-06-07 13:47:41,374 - app.services.technical_analysis - INFO - Detected 8 swing points from 69 bars
+2025-06-07 13:47:41,377 - app.services.technical_analysis - INFO - ZigZag calculated: 65 points with 0.1% deviation
+2025-06-07 13:47:41,377 - app.services.technical_analysis - INFO - Technical analysis completed for 69 data points
+2025-06-07 13:47:41,384 - app.services.technical_analysis - INFO - Detected 8 swing points from 70 bars
+2025-06-07 13:47:41,387 - app.services.technical_analysis - INFO - ZigZag calculated: 66 points with 0.1% deviation
+2025-06-07 13:47:41,387 - app.services.technical_analysis - INFO - Technical analysis completed for 70 data points
+2025-06-07 13:47:41,394 - app.services.technical_analysis - INFO - Detected 8 swing points from 71 bars
+2025-06-07 13:47:41,396 - app.services.technical_analysis - INFO - ZigZag calculated: 67 points with 0.1% deviation
+2025-06-07 13:47:41,396 - app.services.technical_analysis - INFO - Technical analysis completed for 71 data points
+2025-06-07 13:47:41,404 - app.services.technical_analysis - INFO - Detected 8 swing points from 72 bars
+2025-06-07 13:47:41,406 - app.services.technical_analysis - INFO - ZigZag calculated: 68 points with 0.1% deviation
+2025-06-07 13:47:41,406 - app.services.technical_analysis - INFO - Technical analysis completed for 72 data points
+2025-06-07 13:47:41,413 - app.services.technical_analysis - INFO - Detected 8 swing points from 73 bars
+2025-06-07 13:47:41,416 - app.services.technical_analysis - INFO - ZigZag calculated: 69 points with 0.1% deviation
+2025-06-07 13:47:41,416 - app.services.technical_analysis - INFO - Technical analysis completed for 73 data points
+2025-06-07 13:47:41,423 - app.services.technical_analysis - INFO - Detected 8 swing points from 74 bars
+2025-06-07 13:47:41,426 - app.services.technical_analysis - INFO - ZigZag calculated: 70 points with 0.1% deviation
+2025-06-07 13:47:41,426 - app.services.technical_analysis - INFO - Technical analysis completed for 74 data points
+2025-06-07 13:47:41,433 - app.services.technical_analysis - INFO - Detected 8 swing points from 75 bars
+2025-06-07 13:47:41,436 - app.services.technical_analysis - INFO - ZigZag calculated: 71 points with 0.1% deviation
+2025-06-07 13:47:41,436 - app.services.technical_analysis - INFO - Technical analysis completed for 75 data points
+2025-06-07 13:47:41,444 - app.services.technical_analysis - INFO - Detected 8 swing points from 76 bars
+2025-06-07 13:47:41,447 - app.services.technical_analysis - INFO - ZigZag calculated: 72 points with 0.1% deviation
+2025-06-07 13:47:41,447 - app.services.technical_analysis - INFO - Technical analysis completed for 76 data points
+2025-06-07 13:47:41,454 - app.services.technical_analysis - INFO - Detected 8 swing points from 77 bars
+2025-06-07 13:47:41,457 - app.services.technical_analysis - INFO - ZigZag calculated: 73 points with 0.1% deviation
+2025-06-07 13:47:41,457 - app.services.technical_analysis - INFO - Technical analysis completed for 77 data points
+2025-06-07 13:47:41,465 - app.services.technical_analysis - INFO - Detected 8 swing points from 78 bars
+2025-06-07 13:47:41,468 - app.services.technical_analysis - INFO - ZigZag calculated: 74 points with 0.1% deviation
+2025-06-07 13:47:41,468 - app.services.technical_analysis - INFO - Technical analysis completed for 78 data points
+2025-06-07 13:47:41,476 - app.services.technical_analysis - INFO - Detected 8 swing points from 79 bars
+2025-06-07 13:47:41,479 - app.services.technical_analysis - INFO - ZigZag calculated: 75 points with 0.1% deviation
+2025-06-07 13:47:41,479 - app.services.technical_analysis - INFO - Technical analysis completed for 79 data points
+2025-06-07 13:47:41,487 - app.services.technical_analysis - INFO - Detected 8 swing points from 80 bars
+2025-06-07 13:47:41,489 - app.services.technical_analysis - INFO - ZigZag calculated: 76 points with 0.1% deviation
+2025-06-07 13:47:41,490 - app.services.technical_analysis - INFO - Technical analysis completed for 80 data points
+2025-06-07 13:47:41,498 - app.services.technical_analysis - INFO - Detected 8 swing points from 81 bars
+2025-06-07 13:47:41,500 - app.services.technical_analysis - INFO - ZigZag calculated: 77 points with 0.1% deviation
+2025-06-07 13:47:41,500 - app.services.technical_analysis - INFO - Technical analysis completed for 81 data points
+2025-06-07 13:47:41,509 - app.services.technical_analysis - INFO - Detected 9 swing points from 82 bars
+2025-06-07 13:47:41,512 - app.services.technical_analysis - INFO - ZigZag calculated: 78 points with 0.1% deviation
+2025-06-07 13:47:41,512 - app.services.technical_analysis - INFO - Technical analysis completed for 82 data points
+2025-06-07 13:47:41,520 - app.services.technical_analysis - INFO - Detected 9 swing points from 83 bars
+2025-06-07 13:47:41,523 - app.services.technical_analysis - INFO - ZigZag calculated: 79 points with 0.1% deviation
+2025-06-07 13:47:41,523 - app.services.technical_analysis - INFO - Technical analysis completed for 83 data points
+2025-06-07 13:47:41,531 - app.services.technical_analysis - INFO - Detected 9 swing points from 84 bars
+2025-06-07 13:47:41,534 - app.services.technical_analysis - INFO - ZigZag calculated: 80 points with 0.1% deviation
+2025-06-07 13:47:41,534 - app.services.technical_analysis - INFO - Technical analysis completed for 84 data points
+2025-06-07 13:47:41,534 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:47:41,534 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(51.220798368502), 'atr': np.float64(0.451629285714286)}
+2025-06-07 13:47:41,534 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.73235
+2025-06-07 13:47:41,543 - app.services.technical_analysis - INFO - Detected 9 swing points from 85 bars
+2025-06-07 13:47:41,547 - app.services.technical_analysis - INFO - ZigZag calculated: 81 points with 0.1% deviation
+2025-06-07 13:47:41,547 - app.services.technical_analysis - INFO - Technical analysis completed for 85 data points
+2025-06-07 13:47:41,547 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 55
+2025-06-07 13:47:41,547 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(48.980763386274354), 'atr': np.float64(0.43906357142857033)}
+2025-06-07 13:47:41,547 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.79439
+2025-06-07 13:47:41,556 - app.services.technical_analysis - INFO - Detected 9 swing points from 86 bars
+2025-06-07 13:47:41,559 - app.services.technical_analysis - INFO - ZigZag calculated: 82 points with 0.1% deviation
+2025-06-07 13:47:41,559 - app.services.technical_analysis - INFO - Technical analysis completed for 86 data points
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(54.91218544038384), 'atr': np.float64(0.4182599999999996)}
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.81357
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.73235 -> 146.30229
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.79439 -> 146.30229
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.81357 -> 146.30229
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:47:41,559 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:47:41,560 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:47:41,561 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:47:41,562 - app.api.backtest - INFO - バックテスト完了: ID=39, 取引数=4
+2025-06-07 13:47:41,666 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:48:37,983 - app.api.backtest - INFO - バックテスト開始: スイング戦略_2024年テスト (USDJPY)
+2025-06-07 13:48:37,983 - app.api.backtest - INFO - バックテスト実行開始: ID=40
+2025-06-07 13:48:37,997 - app.services.backtest_engine - INFO - データフィルタリング前: 9202件
+2025-06-07 13:48:37,997 - app.services.backtest_engine - INFO - 要求期間: 2024-01-01 - 2024-03-31
+2025-06-07 13:48:37,997 - app.services.backtest_engine - INFO - 変換後期間: 2024-01-01 00:00:00 - 2024-03-31 00:00:00
+2025-06-07 13:48:37,997 - app.services.backtest_engine - INFO - データ範囲: 2023-01-01 00:00:00 - 2025-06-06 23:40:00
+2025-06-07 13:48:37,997 - app.services.backtest_engine - INFO - フィルタリング後: 0件
+2025-06-07 13:48:37,998 - app.services.backtest_engine - INFO - 市場データ取得完了: 0件 (USDJPY)
+2025-06-07 13:48:37,998 - app.services.backtest_engine - ERROR - バックテスト実行エラー: データが不足しています: 0件
+2025-06-07 13:48:37,998 - app.api.backtest - ERROR - バックテスト実行エラー: データが不足しています: 0件
+2025-06-07 13:48:38,094 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:49:17,107 - app.api.backtest - INFO - バックテスト開始: スイング戦略_直近3ヶ月 (USDJPY)
+2025-06-07 13:49:17,108 - app.api.backtest - INFO - バックテスト実行開始: ID=41
+2025-06-07 13:49:17,138 - app.services.backtest_engine - INFO - データフィルタリング前: 9202件
+2025-06-07 13:49:17,138 - app.services.backtest_engine - INFO - 要求期間: 2025-03-01 - 2025-06-06
+2025-06-07 13:49:17,138 - app.services.backtest_engine - INFO - 変換後期間: 2025-03-01 00:00:00 - 2025-06-06 00:00:00
+2025-06-07 13:49:17,138 - app.services.backtest_engine - INFO - データ範囲: 2023-01-01 00:00:00 - 2025-06-06 23:40:00
+2025-06-07 13:49:17,138 - app.services.backtest_engine - INFO - フィルタリング後: 0件
+2025-06-07 13:49:17,139 - app.services.backtest_engine - INFO - 市場データ取得完了: 0件 (USDJPY)
+2025-06-07 13:49:17,139 - app.services.backtest_engine - ERROR - バックテスト実行エラー: データが不足しています: 0件
+2025-06-07 13:49:17,139 - app.api.backtest - ERROR - バックテスト実行エラー: データが不足しています: 0件
+2025-06-07 13:49:17,216 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:49:46,658 - app.api.backtest - INFO - バックテスト開始: スイング戦略_2023年フル (USDJPY)
+2025-06-07 13:49:46,659 - app.api.backtest - INFO - バックテスト実行開始: ID=42
+2025-06-07 13:49:46,673 - app.services.backtest_engine - INFO - データフィルタリング前: 9202件
+2025-06-07 13:49:46,673 - app.services.backtest_engine - INFO - 要求期間: 2023-01-01 - 2023-12-31
+2025-06-07 13:49:46,673 - app.services.backtest_engine - INFO - 変換後期間: 2023-01-01 00:00:00 - 2023-12-31 00:00:00
+2025-06-07 13:49:46,673 - app.services.backtest_engine - INFO - データ範囲: 2023-01-01 00:00:00 - 2025-06-06 23:40:00
+2025-06-07 13:49:46,673 - app.services.backtest_engine - INFO - フィルタリング後: 100件
+2025-06-07 13:49:46,674 - app.services.backtest_engine - INFO - 市場データ取得完了: 100件 (USDJPY)
+2025-06-07 13:49:46,696 - app.services.backtest_engine - INFO - バックテスト開始インデックス: 10, 総データ数: 100
+2025-06-07 13:49:46,703 - app.services.technical_analysis - INFO - Detected 6 swing points from 50 bars
+2025-06-07 13:49:46,705 - app.services.technical_analysis - INFO - ZigZag calculated: 47 points with 0.1% deviation
+2025-06-07 13:49:46,705 - app.services.technical_analysis - INFO - Technical analysis completed for 50 data points
+2025-06-07 13:49:46,711 - app.services.technical_analysis - INFO - Detected 6 swing points from 51 bars
+2025-06-07 13:49:46,713 - app.services.technical_analysis - INFO - ZigZag calculated: 48 points with 0.1% deviation
+2025-06-07 13:49:46,713 - app.services.technical_analysis - INFO - Technical analysis completed for 51 data points
+2025-06-07 13:49:46,718 - app.services.technical_analysis - INFO - Detected 6 swing points from 52 bars
+2025-06-07 13:49:46,721 - app.services.technical_analysis - INFO - ZigZag calculated: 49 points with 0.1% deviation
+2025-06-07 13:49:46,721 - app.services.technical_analysis - INFO - Technical analysis completed for 52 data points
+2025-06-07 13:49:46,727 - app.services.technical_analysis - INFO - Detected 6 swing points from 53 bars
+2025-06-07 13:49:46,729 - app.services.technical_analysis - INFO - ZigZag calculated: 50 points with 0.1% deviation
+2025-06-07 13:49:46,729 - app.services.technical_analysis - INFO - Technical analysis completed for 53 data points
+2025-06-07 13:49:46,735 - app.services.technical_analysis - INFO - Detected 6 swing points from 54 bars
+2025-06-07 13:49:46,737 - app.services.technical_analysis - INFO - ZigZag calculated: 51 points with 0.1% deviation
+2025-06-07 13:49:46,737 - app.services.technical_analysis - INFO - Technical analysis completed for 54 data points
+2025-06-07 13:49:46,743 - app.services.technical_analysis - INFO - Detected 6 swing points from 55 bars
+2025-06-07 13:49:46,745 - app.services.technical_analysis - INFO - ZigZag calculated: 52 points with 0.1% deviation
+2025-06-07 13:49:46,745 - app.services.technical_analysis - INFO - Technical analysis completed for 55 data points
+2025-06-07 13:49:46,751 - app.services.technical_analysis - INFO - Detected 6 swing points from 56 bars
+2025-06-07 13:49:46,753 - app.services.technical_analysis - INFO - ZigZag calculated: 53 points with 0.1% deviation
+2025-06-07 13:49:46,753 - app.services.technical_analysis - INFO - Technical analysis completed for 56 data points
+2025-06-07 13:49:46,759 - app.services.technical_analysis - INFO - Detected 7 swing points from 57 bars
+2025-06-07 13:49:46,762 - app.services.technical_analysis - INFO - ZigZag calculated: 54 points with 0.1% deviation
+2025-06-07 13:49:46,762 - app.services.technical_analysis - INFO - Technical analysis completed for 57 data points
+2025-06-07 13:49:46,762 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:49:46,769 - app.services.technical_analysis - INFO - Detected 7 swing points from 58 bars
+2025-06-07 13:49:46,771 - app.services.technical_analysis - INFO - ZigZag calculated: 55 points with 0.1% deviation
+2025-06-07 13:49:46,771 - app.services.technical_analysis - INFO - Technical analysis completed for 58 data points
+2025-06-07 13:49:46,777 - app.services.technical_analysis - INFO - Detected 7 swing points from 59 bars
+2025-06-07 13:49:46,780 - app.services.technical_analysis - INFO - ZigZag calculated: 56 points with 0.1% deviation
+2025-06-07 13:49:46,780 - app.services.technical_analysis - INFO - Technical analysis completed for 59 data points
+2025-06-07 13:49:46,786 - app.services.technical_analysis - INFO - Detected 7 swing points from 60 bars
+2025-06-07 13:49:46,789 - app.services.technical_analysis - INFO - ZigZag calculated: 57 points with 0.1% deviation
+2025-06-07 13:49:46,789 - app.services.technical_analysis - INFO - Technical analysis completed for 60 data points
+2025-06-07 13:49:46,795 - app.services.technical_analysis - INFO - Detected 7 swing points from 61 bars
+2025-06-07 13:49:46,798 - app.services.technical_analysis - INFO - ZigZag calculated: 58 points with 0.1% deviation
+2025-06-07 13:49:46,798 - app.services.technical_analysis - INFO - Technical analysis completed for 61 data points
+2025-06-07 13:49:46,804 - app.services.technical_analysis - INFO - Detected 7 swing points from 62 bars
+2025-06-07 13:49:46,807 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:49:46,807 - app.services.technical_analysis - INFO - Technical analysis completed for 62 data points
+2025-06-07 13:49:46,813 - app.services.technical_analysis - INFO - Detected 7 swing points from 63 bars
+2025-06-07 13:49:46,816 - app.services.technical_analysis - INFO - ZigZag calculated: 59 points with 0.1% deviation
+2025-06-07 13:49:46,816 - app.services.technical_analysis - INFO - Technical analysis completed for 63 data points
+2025-06-07 13:49:46,822 - app.services.technical_analysis - INFO - Detected 7 swing points from 64 bars
+2025-06-07 13:49:46,825 - app.services.technical_analysis - INFO - ZigZag calculated: 60 points with 0.1% deviation
+2025-06-07 13:49:46,825 - app.services.technical_analysis - INFO - Technical analysis completed for 64 data points
+2025-06-07 13:49:46,831 - app.services.technical_analysis - INFO - Detected 7 swing points from 65 bars
+2025-06-07 13:49:46,834 - app.services.technical_analysis - INFO - ZigZag calculated: 61 points with 0.1% deviation
+2025-06-07 13:49:46,834 - app.services.technical_analysis - INFO - Technical analysis completed for 65 data points
+2025-06-07 13:49:46,840 - app.services.technical_analysis - INFO - Detected 8 swing points from 66 bars
+2025-06-07 13:49:46,843 - app.services.technical_analysis - INFO - ZigZag calculated: 62 points with 0.1% deviation
+2025-06-07 13:49:46,843 - app.services.technical_analysis - INFO - Technical analysis completed for 66 data points
+2025-06-07 13:49:46,849 - app.services.technical_analysis - INFO - Detected 8 swing points from 67 bars
+2025-06-07 13:49:46,852 - app.services.technical_analysis - INFO - ZigZag calculated: 63 points with 0.1% deviation
+2025-06-07 13:49:46,852 - app.services.technical_analysis - INFO - Technical analysis completed for 67 data points
+2025-06-07 13:49:46,859 - app.services.technical_analysis - INFO - Detected 8 swing points from 68 bars
+2025-06-07 13:49:46,861 - app.services.technical_analysis - INFO - ZigZag calculated: 64 points with 0.1% deviation
+2025-06-07 13:49:46,861 - app.services.technical_analysis - INFO - Technical analysis completed for 68 data points
+2025-06-07 13:49:46,861 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:49:46,861 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 8, 'last_high': np.float64(145.29007), 'last_low': np.float64(143.5888), 'rsi': np.float64(57.10974613800763), 'atr': np.float64(0.3637871428571446)}
+2025-06-07 13:49:46,868 - app.services.technical_analysis - INFO - Detected 8 swing points from 69 bars
+2025-06-07 13:49:46,871 - app.services.technical_analysis - INFO - ZigZag calculated: 65 points with 0.1% deviation
+2025-06-07 13:49:46,871 - app.services.technical_analysis - INFO - Technical analysis completed for 69 data points
+2025-06-07 13:49:46,878 - app.services.technical_analysis - INFO - Detected 8 swing points from 70 bars
+2025-06-07 13:49:46,880 - app.services.technical_analysis - INFO - ZigZag calculated: 66 points with 0.1% deviation
+2025-06-07 13:49:46,880 - app.services.technical_analysis - INFO - Technical analysis completed for 70 data points
+2025-06-07 13:49:46,887 - app.services.technical_analysis - INFO - Detected 8 swing points from 71 bars
+2025-06-07 13:49:46,890 - app.services.technical_analysis - INFO - ZigZag calculated: 67 points with 0.1% deviation
+2025-06-07 13:49:46,890 - app.services.technical_analysis - INFO - Technical analysis completed for 71 data points
+2025-06-07 13:49:46,897 - app.services.technical_analysis - INFO - Detected 8 swing points from 72 bars
+2025-06-07 13:49:46,900 - app.services.technical_analysis - INFO - ZigZag calculated: 68 points with 0.1% deviation
+2025-06-07 13:49:46,900 - app.services.technical_analysis - INFO - Technical analysis completed for 72 data points
+2025-06-07 13:49:46,907 - app.services.technical_analysis - INFO - Detected 8 swing points from 73 bars
+2025-06-07 13:49:46,910 - app.services.technical_analysis - INFO - ZigZag calculated: 69 points with 0.1% deviation
+2025-06-07 13:49:46,910 - app.services.technical_analysis - INFO - Technical analysis completed for 73 data points
+2025-06-07 13:49:46,917 - app.services.technical_analysis - INFO - Detected 8 swing points from 74 bars
+2025-06-07 13:49:46,920 - app.services.technical_analysis - INFO - ZigZag calculated: 70 points with 0.1% deviation
+2025-06-07 13:49:46,920 - app.services.technical_analysis - INFO - Technical analysis completed for 74 data points
+2025-06-07 13:49:46,927 - app.services.technical_analysis - INFO - Detected 8 swing points from 75 bars
+2025-06-07 13:49:46,930 - app.services.technical_analysis - INFO - ZigZag calculated: 71 points with 0.1% deviation
+2025-06-07 13:49:46,930 - app.services.technical_analysis - INFO - Technical analysis completed for 75 data points
+2025-06-07 13:49:46,937 - app.services.technical_analysis - INFO - Detected 8 swing points from 76 bars
+2025-06-07 13:49:46,940 - app.services.technical_analysis - INFO - ZigZag calculated: 72 points with 0.1% deviation
+2025-06-07 13:49:46,940 - app.services.technical_analysis - INFO - Technical analysis completed for 76 data points
+2025-06-07 13:49:46,948 - app.services.technical_analysis - INFO - Detected 8 swing points from 77 bars
+2025-06-07 13:49:46,950 - app.services.technical_analysis - INFO - ZigZag calculated: 73 points with 0.1% deviation
+2025-06-07 13:49:46,950 - app.services.technical_analysis - INFO - Technical analysis completed for 77 data points
+2025-06-07 13:49:46,958 - app.services.technical_analysis - INFO - Detected 8 swing points from 78 bars
+2025-06-07 13:49:46,961 - app.services.technical_analysis - INFO - ZigZag calculated: 74 points with 0.1% deviation
+2025-06-07 13:49:46,961 - app.services.technical_analysis - INFO - Technical analysis completed for 78 data points
+2025-06-07 13:49:46,969 - app.services.technical_analysis - INFO - Detected 8 swing points from 79 bars
+2025-06-07 13:49:46,972 - app.services.technical_analysis - INFO - ZigZag calculated: 75 points with 0.1% deviation
+2025-06-07 13:49:46,972 - app.services.technical_analysis - INFO - Technical analysis completed for 79 data points
+2025-06-07 13:49:46,980 - app.services.technical_analysis - INFO - Detected 8 swing points from 80 bars
+2025-06-07 13:49:46,983 - app.services.technical_analysis - INFO - ZigZag calculated: 76 points with 0.1% deviation
+2025-06-07 13:49:46,983 - app.services.technical_analysis - INFO - Technical analysis completed for 80 data points
+2025-06-07 13:49:46,991 - app.services.technical_analysis - INFO - Detected 8 swing points from 81 bars
+2025-06-07 13:49:46,994 - app.services.technical_analysis - INFO - ZigZag calculated: 77 points with 0.1% deviation
+2025-06-07 13:49:46,994 - app.services.technical_analysis - INFO - Technical analysis completed for 81 data points
+2025-06-07 13:49:47,002 - app.services.technical_analysis - INFO - Detected 9 swing points from 82 bars
+2025-06-07 13:49:47,005 - app.services.technical_analysis - INFO - ZigZag calculated: 78 points with 0.1% deviation
+2025-06-07 13:49:47,005 - app.services.technical_analysis - INFO - Technical analysis completed for 82 data points
+2025-06-07 13:49:47,014 - app.services.technical_analysis - INFO - Detected 9 swing points from 83 bars
+2025-06-07 13:49:47,017 - app.services.technical_analysis - INFO - ZigZag calculated: 79 points with 0.1% deviation
+2025-06-07 13:49:47,017 - app.services.technical_analysis - INFO - Technical analysis completed for 83 data points
+2025-06-07 13:49:47,025 - app.services.technical_analysis - INFO - Detected 9 swing points from 84 bars
+2025-06-07 13:49:47,028 - app.services.technical_analysis - INFO - ZigZag calculated: 80 points with 0.1% deviation
+2025-06-07 13:49:47,028 - app.services.technical_analysis - INFO - Technical analysis completed for 84 data points
+2025-06-07 13:49:47,028 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:49:47,028 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(51.220798368502), 'atr': np.float64(0.451629285714286)}
+2025-06-07 13:49:47,029 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.73235
+2025-06-07 13:49:47,037 - app.services.technical_analysis - INFO - Detected 9 swing points from 85 bars
+2025-06-07 13:49:47,040 - app.services.technical_analysis - INFO - ZigZag calculated: 81 points with 0.1% deviation
+2025-06-07 13:49:47,040 - app.services.technical_analysis - INFO - Technical analysis completed for 85 data points
+2025-06-07 13:49:47,040 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 55
+2025-06-07 13:49:47,040 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(48.980763386274354), 'atr': np.float64(0.43906357142857033)}
+2025-06-07 13:49:47,040 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.79439
+2025-06-07 13:49:47,049 - app.services.technical_analysis - INFO - Detected 9 swing points from 86 bars
+2025-06-07 13:49:47,052 - app.services.technical_analysis - INFO - ZigZag calculated: 82 points with 0.1% deviation
+2025-06-07 13:49:47,052 - app.services.technical_analysis - INFO - Technical analysis completed for 86 data points
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Swing signal generated: sell with score 67
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Analysis: {'trend': 'downtrend', 'trend_strength': 24, 'swing_points_count': 9, 'last_high': np.float64(147.14886), 'last_low': np.float64(143.5888), 'rsi': np.float64(54.91218544038384), 'atr': np.float64(0.4182599999999996)}
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 147.44316 -> 146.81357
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.73235 -> 146.30229
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.79439 -> 146.30229
+2025-06-07 13:49:47,052 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.81357 -> 146.30229
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 146.30229 -> 145.76089
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.76089 -> 145.69617
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.69617 -> 145.35557
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:49:47,053 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:49:47,054 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 145.35557 -> 144.99100
+2025-06-07 13:49:47,054 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:49:47,054 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:49:47,054 - app.services.backtest_engine - INFO - Trailing stop updated for SELL: 144.99100 -> 144.50572
+2025-06-07 13:49:47,055 - app.api.backtest - INFO - バックテスト完了: ID=42, 取引数=4
+2025-06-07 13:49:47,120 - watchfiles.main - INFO - 3 changes detected
+2025-06-07 13:50:19,333 - watchfiles.main - INFO - 1 change detected
+2025-06-07 13:51:02,176 - watchfiles.main - INFO - 1 change detected

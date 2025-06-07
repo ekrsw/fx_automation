@@ -362,7 +362,186 @@ class BacktestEngine:
     
     async def _generate_signal(self, data: pd.DataFrame, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """
-        エントリーシグナルを生成（簡略化版）
+        エントリーシグナルを生成（戦略選択対応）
+        """
+        try:
+            # 戦略タイプを取得（デフォルトはスキャルピング）
+            strategy_type = parameters.get('strategy_type', 'scalping')
+            
+            if strategy_type == 'swing':
+                return await self._generate_swing_signal(data, parameters)
+            else:
+                return await self._generate_scalping_signal(data, parameters)
+                
+        except Exception as e:
+            logger.error(f"シグナル生成エラー: {str(e)}")
+            return {'action': 'hold', 'score': 0}
+    
+    async def _generate_swing_signal(self, data: pd.DataFrame, parameters: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        スイングトレード戦略のシグナル生成
+        ダウ理論とエリオット波動を活用
+        """
+        try:
+            signal = {
+                'action': 'hold',
+                'score': 0,
+                'stop_loss': None,
+                'take_profit': None,
+                'analysis': {}
+            }
+            
+            # 最低限必要なデータ数チェック
+            if len(data) < 50:
+                return signal
+            
+            # ダウ理論によるトレンド分析
+            market_data_list = data.reset_index().to_dict('records')
+            for record in market_data_list:
+                record['timestamp'] = record['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
+            
+            analysis_result = self.technical_service.analyze_market_data(market_data_list)
+            
+            if 'error' in analysis_result:
+                logger.error(f"Technical analysis error: {analysis_result['error']}")
+                return signal
+            
+            trend_analysis = analysis_result.get('trend_analysis', {})
+            swing_points = analysis_result.get('swing_points', [])
+            
+            # トレンド判定
+            trend = trend_analysis.get('trend', 'sideways')
+            trend_strength = trend_analysis.get('strength', 0)
+            
+            # 最新価格
+            current = data.iloc[-1]
+            current_price = current['close']
+            
+            # スコア計算
+            score = 0
+            
+            # 1. トレンド強度（0-30点）
+            score += trend_strength
+            
+            # 2. トレンド方向の確認（+/-20点）
+            if trend == 'uptrend':
+                score += 20
+            elif trend == 'downtrend':
+                score -= 20
+            
+            # 3. 直近のスイングポイントとの位置関係（+/-30点）
+            if swing_points:
+                recent_highs = [sp for sp in swing_points[-10:] if sp['type'] == 'high']
+                recent_lows = [sp for sp in swing_points[-10:] if sp['type'] == 'low']
+                
+                if recent_lows:
+                    last_low = recent_lows[-1]['price']
+                    # 直近安値からの上昇率
+                    rise_from_low = (current_price - last_low) / last_low
+                    
+                    if trend == 'uptrend' and 0.001 < rise_from_low < 0.01:  # 0.1%～1%の上昇
+                        score += 30  # 押し目買いチャンス
+                    elif trend == 'downtrend' and rise_from_low > 0.01:
+                        score -= 20  # 下降トレンドでの戻りは売りシグナル
+                
+                if recent_highs:
+                    last_high = recent_highs[-1]['price']
+                    # 直近高値からの下落率
+                    fall_from_high = (last_high - current_price) / last_high
+                    
+                    if trend == 'downtrend' and 0.001 < fall_from_high < 0.01:  # 0.1%～1%の下落
+                        score -= 30  # 戻り売りチャンス
+                    elif trend == 'uptrend' and fall_from_high > 0.01:
+                        score += 20  # 上昇トレンドでの押し目は買いシグナル
+            
+            # 4. RSIによる過熱感チェック（+/-20点）
+            if 'rsi' in current and not pd.isna(current['rsi']):
+                rsi = current['rsi']
+                if rsi < 30 and trend == 'uptrend':
+                    score += 20  # 売られすぎからの反発期待
+                elif rsi > 70 and trend == 'downtrend':
+                    score -= 20  # 買われすぎからの下落期待
+                elif 30 <= rsi <= 50 and trend == 'uptrend':
+                    score += 10  # 適正レンジでの上昇トレンド
+                elif 50 <= rsi <= 70 and trend == 'downtrend':
+                    score -= 10  # 適正レンジでの下降トレンド
+            
+            # 5. ボラティリティチェック（ATRベース）
+            if 'atr' in current and not pd.isna(current['atr']):
+                atr = current['atr']
+                atr_ratio = atr / current_price
+                
+                # 適度なボラティリティ（0.2%～1%）を好む
+                if 0.002 < atr_ratio < 0.01:
+                    score = int(score * 1.2)  # 20%ボーナス
+                elif atr_ratio > 0.02:
+                    score = int(score * 0.7)  # 高ボラティリティはリスク
+            
+            # シグナル判定
+            entry_threshold = parameters.get('swing_entry_threshold', 60)
+            
+            if score >= entry_threshold:
+                signal['action'] = 'buy'
+                signal['score'] = score
+                
+                # ストップロスとテイクプロフィット設定
+                if recent_lows:
+                    # 直近スイングローの少し下にストップロス
+                    signal['stop_loss'] = recent_lows[-1]['price'] * 0.998
+                else:
+                    # ATRベースのストップロス（2ATR）
+                    if 'atr' in current:
+                        signal['stop_loss'] = current_price - (current['atr'] * 2)
+                    else:
+                        signal['stop_loss'] = current_price * 0.99  # 1%下
+                
+                # リスクリワード比 1:2
+                risk = current_price - signal['stop_loss']
+                signal['take_profit'] = current_price + (risk * 2)
+                
+            elif score <= -entry_threshold:
+                signal['action'] = 'sell'
+                signal['score'] = abs(score)
+                
+                # ストップロスとテイクプロフィット設定
+                if recent_highs:
+                    # 直近スイングハイの少し上にストップロス
+                    signal['stop_loss'] = recent_highs[-1]['price'] * 1.002
+                else:
+                    # ATRベースのストップロス（2ATR）
+                    if 'atr' in current:
+                        signal['stop_loss'] = current_price + (current['atr'] * 2)
+                    else:
+                        signal['stop_loss'] = current_price * 1.01  # 1%上
+                
+                # リスクリワード比 1:2
+                risk = signal['stop_loss'] - current_price
+                signal['take_profit'] = current_price - (risk * 2)
+            
+            # 分析情報を追加
+            signal['analysis'] = {
+                'trend': trend,
+                'trend_strength': trend_strength,
+                'swing_points_count': len(swing_points),
+                'last_high': recent_highs[-1]['price'] if recent_highs else None,
+                'last_low': recent_lows[-1]['price'] if recent_lows else None,
+                'rsi': current.get('rsi'),
+                'atr': current.get('atr')
+            }
+            
+            if signal['action'] != 'hold':
+                logger.info(f"Swing signal generated: {signal['action']} with score {signal['score']}")
+                logger.info(f"Analysis: {signal['analysis']}")
+            
+            return signal
+            
+        except Exception as e:
+            logger.error(f"スイングシグナル生成エラー: {str(e)}")
+            return {'action': 'hold', 'score': 0}
+    
+    async def _generate_scalping_signal(self, data: pd.DataFrame, parameters: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        スキャルピング戦略のシグナル生成（既存のロジック）
         """
         try:
             current = data.iloc[-1]
@@ -503,17 +682,28 @@ class BacktestEngine:
                     return True, 'take_profit'
             
             # 時間ベースの決済（最大保持期間）
-            max_hold_hours = parameters.get('max_hold_hours', 24 * 7)  # デフォルト1週間
+            strategy_type = parameters.get('strategy_type', 'scalping')
+            if strategy_type == 'swing':
+                max_hold_hours = parameters.get('swing_max_hold_hours', 24 * 5)  # スイングは5日
+            else:
+                max_hold_hours = parameters.get('max_hold_hours', 1)  # スキャルピングは1時間
+                
             hold_time = data.index[-1] - position['entry_time']
             
             if hold_time.total_seconds() / 3600 > max_hold_hours:
                 return True, 'time_limit'
             
+            # スイング戦略の場合、トレーリングストップを実装
+            if strategy_type == 'swing' and parameters.get('use_trailing_stop', True):
+                trailing_stop_updated = await self._update_trailing_stop(position, current_price, parameters)
+                if trailing_stop_updated:
+                    position['stop_loss'] = trailing_stop_updated
+            
             # トレンド転換チェック
             current = data.iloc[-1]
-            if position['side'] == 'buy' and current['trend'] == -1:
+            if position['side'] == 'buy' and current.get('trend', 0) == -1:
                 return True, 'trend_reversal'
-            elif position['side'] == 'sell' and current['trend'] == 1:
+            elif position['side'] == 'sell' and current.get('trend', 0) == 1:
                 return True, 'trend_reversal'
             
             return False, ''
@@ -521,6 +711,33 @@ class BacktestEngine:
         except Exception as e:
             logger.error(f"ポジション決済判定エラー: {str(e)}")
             return False, 'error'
+    
+    async def _update_trailing_stop(self, position: Dict[str, Any], current_price: pd.Series, parameters: Dict[str, Any]) -> Optional[float]:
+        """
+        トレーリングストップの更新
+        """
+        try:
+            trailing_stop_distance = parameters.get('trailing_stop_distance', 0.005)  # 0.5%
+            current_close = current_price['close']
+            
+            if position['side'] == 'buy':
+                # 買いポジション：価格が上昇したらストップロスを引き上げる
+                new_stop_loss = current_close * (1 - trailing_stop_distance)
+                if new_stop_loss > position['stop_loss']:
+                    logger.info(f"Trailing stop updated for BUY: {position['stop_loss']:.5f} -> {new_stop_loss:.5f}")
+                    return new_stop_loss
+            else:
+                # 売りポジション：価格が下落したらストップロスを引き下げる
+                new_stop_loss = current_close * (1 + trailing_stop_distance)
+                if new_stop_loss < position['stop_loss']:
+                    logger.info(f"Trailing stop updated for SELL: {position['stop_loss']:.5f} -> {new_stop_loss:.5f}")
+                    return new_stop_loss
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"トレーリングストップ更新エラー: {str(e)}")
+            return None
     
     def _calculate_unrealized_pnl(self, positions: List[Dict[str, Any]], current_price: pd.Series) -> float:
         """
