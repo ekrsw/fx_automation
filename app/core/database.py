@@ -152,6 +152,9 @@ class DatabaseManager:
                     sharpe_ratio REAL,
                     win_rate REAL NOT NULL,
                     profit_factor REAL,
+                    initial_balance REAL DEFAULT 100000,
+                    final_balance REAL,
+                    leverage REAL DEFAULT 1.0,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP
                 )
             ''')

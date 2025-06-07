@@ -795,19 +795,34 @@ class BacktestEngine:
             # シャープレシオを計算
             sharpe_ratio = self._calculate_sharpe_ratio(equity_curve)
             
+            # 最終残高と収益率の計算
+            final_balance = initial_balance + total_profit
+            return_percentage = (total_profit / initial_balance) * 100
+            
             result = {
+                # 資金関連情報
+                'initial_balance': round(initial_balance, 2),
+                'final_balance': round(final_balance, 2),
+                'total_profit': round(total_profit, 2),
+                'return_percentage': round(return_percentage, 2),
+                'leverage': 1.0,  # デフォルトレバレッジ（将来的に拡張可能）
+                
+                # 取引統計
                 'total_trades': total_trades,
                 'winning_trades': winning_trades,
                 'losing_trades': total_trades - winning_trades,
-                'total_profit': round(total_profit, 2),
                 'win_rate': round(win_rate, 4),
+                
+                # 損益分析
                 'avg_profit': round(avg_profit, 2),
                 'avg_loss': round(avg_loss, 2),
                 'profit_factor': round(profit_factor, 2) if profit_factor != float('inf') else None,
+                
+                # リスク指標
                 'max_drawdown': round(max_drawdown, 2),
                 'sharpe_ratio': round(sharpe_ratio, 4) if sharpe_ratio else None,
-                'final_balance': initial_balance + total_profit,
-                'return_percentage': round((total_profit / initial_balance) * 100, 2),
+                
+                # 詳細データ
                 'trades': trades
             }
             

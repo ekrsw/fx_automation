@@ -26,6 +26,7 @@ class BacktestRequest(BaseModel):
     initial_balance: float = 100000.0
     risk_per_trade: float = 0.02
     max_positions: int = 3
+    leverage: float = 1.0
 
 class BacktestResult(BaseModel):
     id: Optional[int] = None
@@ -36,11 +37,16 @@ class BacktestResult(BaseModel):
     parameters: Dict[str, Any]
     total_trades: int
     winning_trades: int
+    losing_trades: int
     total_profit: float
     max_drawdown: float
     sharpe_ratio: Optional[float]
     win_rate: float
     profit_factor: Optional[float]
+    initial_balance: float = 100000.0
+    final_balance: float
+    leverage: float = 1.0
+    return_percentage: float
     created_at: Optional[datetime] = None
 
 class BacktestTrade(BaseModel):
@@ -76,14 +82,16 @@ async def run_backtest(request: BacktestRequest, background_tasks: BackgroundTas
         cursor.execute("""
             INSERT INTO backtest_results 
             (name, symbol, start_date, end_date, parameters, total_trades, 
-             winning_trades, total_profit, max_drawdown, win_rate, created_at)
-            VALUES (?, ?, ?, ?, ?, 0, 0, 0, 0, 0, ?)
+             winning_trades, total_profit, max_drawdown, win_rate, initial_balance, leverage, created_at)
+            VALUES (?, ?, ?, ?, ?, 0, 0, 0, 0, 0, ?, ?, ?)
         """, (
             request.name,
             request.symbol,
             request.start_date,
             request.end_date,
             json.dumps(request.parameters),
+            request.initial_balance,
+            request.leverage,
             datetime.now()
         ))
         
@@ -138,6 +146,12 @@ async def get_backtest_results(
         
         results = []
         for row in rows:
+            # カラム順序: created_at(13), initial_balance(14), final_balance(15), leverage(16)
+            created_at = row[13]
+            initial_balance = float(row[14]) if len(row) > 14 and row[14] is not None else 100000.0
+            final_balance = float(row[15]) if len(row) > 15 and row[15] is not None else initial_balance + row[8]
+            leverage = float(row[16]) if len(row) > 16 and row[16] is not None else 1.0
+            
             result = BacktestResult(
                 id=row[0],
                 name=row[1],
@@ -147,12 +161,17 @@ async def get_backtest_results(
                 parameters=json.loads(row[5]),
                 total_trades=row[6],
                 winning_trades=row[7],
+                losing_trades=row[6] - row[7],
                 total_profit=row[8],
                 max_drawdown=row[9],
                 sharpe_ratio=row[10],
                 win_rate=row[11],
                 profit_factor=row[12],
-                created_at=row[13]
+                initial_balance=initial_balance,
+                final_balance=final_balance,
+                leverage=leverage,
+                return_percentage=round((row[8] / initial_balance) * 100, 2),
+                created_at=created_at
             )
             results.append(result)
         
@@ -198,12 +217,17 @@ async def get_backtest_detail(backtest_id: int):
             "parameters": json.loads(result_row[5]),
             "total_trades": result_row[6],
             "winning_trades": result_row[7],
+            "losing_trades": result_row[6] - result_row[7],
             "total_profit": result_row[8],
             "max_drawdown": result_row[9],
             "sharpe_ratio": result_row[10],
             "win_rate": result_row[11],
             "profit_factor": result_row[12],
             "created_at": result_row[13],
+            "initial_balance": float(result_row[14]) if len(result_row) > 14 and result_row[14] is not None else 100000.0,
+            "final_balance": float(result_row[15]) if len(result_row) > 15 and result_row[15] is not None else (float(result_row[14]) + result_row[8] if len(result_row) > 14 and result_row[14] is not None else 100000.0 + result_row[8]),
+            "leverage": float(result_row[16]) if len(result_row) > 16 and result_row[16] is not None else 1.0,
+            "return_percentage": round((result_row[8] / (float(result_row[14]) if len(result_row) > 14 and result_row[14] is not None else 100000.0)) * 100, 2),
             "trades": []
         }
         
@@ -411,7 +435,8 @@ async def save_backtest_result(backtest_id: int, result: Dict[str, Any]):
         cursor.execute("""
             UPDATE backtest_results 
             SET total_trades = ?, winning_trades = ?, total_profit = ?,
-                max_drawdown = ?, sharpe_ratio = ?, win_rate = ?, profit_factor = ?
+                max_drawdown = ?, sharpe_ratio = ?, win_rate = ?, profit_factor = ?,
+                final_balance = ?
             WHERE id = ?
         """, (
             result['total_trades'],
@@ -421,6 +446,7 @@ async def save_backtest_result(backtest_id: int, result: Dict[str, Any]):
             result.get('sharpe_ratio'),
             result['win_rate'],
             result.get('profit_factor'),
+            result.get('final_balance', result.get('initial_balance', 100000) + result['total_profit']),
             backtest_id
         ))
         

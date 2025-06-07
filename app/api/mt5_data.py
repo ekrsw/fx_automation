@@ -81,6 +81,58 @@ async def receive_symbols_list(symbols_data: Dict[str, Any]):
         logger.error(f"シンボル一覧受信エラー: {str(e)}")
         raise HTTPException(status_code=500, detail=f"シンボル一覧受信に失敗: {str(e)}")
 
+@router.post("/mt5/trigger-historical-download")
+async def trigger_historical_download(
+    symbol: str = "USDJPY",
+    year: int = 2023,
+    timeframe: str = "H1"
+):
+    """
+    MT5に履歴データダウンロードを指示
+    
+    Note: この機能を使うには、MT5でMT5_Historical_Data_EAを起動し、
+          EA内のDownloadYearData()関数を手動で実行する必要があります。
+    """
+    try:
+        # MT5がアクティブかチェック（実際の実装では、MT5との通信状態を確認）
+        logger.info(f"履歴データダウンロード要求: {symbol} ({year}年)")
+        
+        # この情報をログに記録し、ユーザーに手動手順を案内
+        instructions = f"""
+        MT5履歴データダウンロード手順:
+        
+        1. MetaTrader 5を開く
+        2. MT5_Historical_Data_EAが起動していることを確認
+        3. エキスパートタブでコードを実行:
+           
+           // {year}年の{symbol}データをダウンロード
+           DownloadYearData("{symbol}", {year}, PERIOD_{timeframe});
+           
+        4. または、Experts/Scripts/で以下を実行:
+           
+           void OnStart()
+           {{
+               DownloadYearData("{symbol}", {year}, PERIOD_{timeframe});
+           }}
+        
+        5. ダウンロード完了まで待機（進捗はMT5のログで確認）
+        """
+        
+        return {
+            "status": "instructions_provided",
+            "symbol": symbol,
+            "year": year,
+            "timeframe": timeframe,
+            "message": "MT5でのデータダウンロード手順を確認してください",
+            "instructions": instructions,
+            "api_endpoint": "/api/v1/mt5/receive-historical-batch",
+            "expected_records": f"約8760件（{year}年の1時間足データ）"
+        }
+        
+    except Exception as e:
+        logger.error(f"履歴データダウンロード指示エラー: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"ダウンロード指示に失敗: {str(e)}")
+
 @router.post("/mt5/receive-terminal-info")
 async def receive_terminal_info(terminal_data: Dict[str, Any]):
     """
