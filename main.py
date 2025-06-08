@@ -17,6 +17,7 @@ from app.api.performance import router as performance_router
 from app.api.historical_data import router as historical_router
 from app.api.csv_import import router as csv_router
 from app.api.mt5_data import router as mt5_router
+from app.api.enhanced_signals import router as enhanced_signals_router
 
 setup_logging()
 logger = get_logger()
@@ -49,6 +50,7 @@ app.include_router(performance_router, prefix="/api/v1")
 app.include_router(historical_router, prefix="/api/v1")
 app.include_router(csv_router, prefix="/api/v1")
 app.include_router(mt5_router, prefix="/api/v1")
+app.include_router(enhanced_signals_router, prefix="/api/v1")
 
 @app.on_event("startup")
 async def startup_event():

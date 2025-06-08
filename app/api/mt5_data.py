@@ -20,27 +20,33 @@ logger = logging.getLogger(__name__)
 @router.post("/mt5/receive-historical-batch")
 async def receive_historical_batch(batch_data: Dict[str, Any]):
     """
-    MT5 EAからの履歴データバッチを受信
+    MT5 EAからの履歴データバッチを受信（重複チェック対応）
     """
     try:
         symbol = batch_data.get("symbol")
         batch_number = batch_data.get("batch_number", 0)
         data_records = batch_data.get("data", [])
+        check_duplicates = batch_data.get("check_duplicates", False)
         
         if not symbol or not data_records:
             raise HTTPException(status_code=400, detail="シンボルまたはデータが不足しています")
         
-        # データベースに保存
-        saved_count = await save_mt5_historical_data(symbol, data_records)
+        # データベースに保存（重複チェック付き）
+        result = await save_mt5_historical_data_with_duplicate_check(symbol, data_records, check_duplicates)
+        saved_count = result["saved"]
+        duplicate_count = result["duplicates"]
         
-        logger.info(f"MT5バッチデータ受信: {symbol} バッチ#{batch_number} ({saved_count}/{len(data_records)}件保存)")
+        logger.info(f"MT5バッチデータ受信: {symbol} バッチ#{batch_number} ({saved_count}/{len(data_records)}件保存, {duplicate_count}件重複)")
         
         return {
+            "success": True,
             "status": "success",
             "symbol": symbol,
             "batch_number": batch_number,
             "received_records": len(data_records),
-            "saved_records": saved_count
+            "saved": saved_count,
+            "duplicates": duplicate_count,
+            "message": f"保存: {saved_count}件, 重複: {duplicate_count}件"
         }
         
     except Exception as e:
@@ -514,27 +520,46 @@ async def simulate_mt5_response(command: str, data: Dict[str, Any]) -> Dict[str,
             "error": f"未対応のコマンド: {command}"
         }
 
-async def save_mt5_historical_data(symbol: str, data_records: List[Dict[str, Any]]) -> int:
+async def save_mt5_historical_data_with_duplicate_check(symbol: str, data_records: List[Dict[str, Any]], check_duplicates: bool = True) -> Dict[str, int]:
     """
-    MT5から取得した履歴データをデータベースに保存
+    MT5から取得した履歴データをデータベースに保存（重複チェック機能付き）
     """
     try:
         if not data_records:
-            return 0
+            return {"saved": 0, "duplicates": 0}
             
         conn = get_db_connection()
         cursor = conn.cursor()
         
         saved_count = 0
+        duplicate_count = 0
+        
+        # 重複チェックが有効な場合、既存のタイムスタンプを事前に取得
+        existing_timestamps = set()
+        if check_duplicates:
+            cursor.execute("""
+                SELECT DISTINCT timestamp FROM market_data 
+                WHERE symbol = ?
+            """, (symbol,))
+            existing_timestamps = {row[0] for row in cursor.fetchall()}
+            logger.info(f"既存データ確認: {symbol}で{len(existing_timestamps)}件のタイムスタンプ")
+        
         for record in data_records:
             try:
+                timestamp = record["timestamp"]
+                
+                # 重複チェック
+                if check_duplicates and timestamp in existing_timestamps:
+                    duplicate_count += 1
+                    continue
+                
                 cursor.execute("""
                     INSERT OR IGNORE INTO market_data 
                     (symbol, timestamp, open, high, low, close, volume)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, (
                     symbol,
-                    record["timestamp"],
+                    timestamp,
                     float(record["open"]),
                     float(record["high"]),
                     float(record["low"]),
@@ -544,6 +569,10 @@ async def save_mt5_historical_data(symbol: str, data_records: List[Dict[str, Any
                 
                 if cursor.rowcount > 0:
                     saved_count += 1
+                    if check_duplicates:
+                        existing_timestamps.add(timestamp)  # 新しく追加したタイムスタンプを記録
+                else:
+                    duplicate_count += 1
                     
             except Exception as e:
                 logger.warning(f"データ保存スキップ: {record.get('timestamp')} - {str(e)}")
@@ -551,8 +580,18 @@ async def save_mt5_historical_data(symbol: str, data_records: List[Dict[str, Any
         conn.commit()
         conn.close()
         
-        return saved_count
+        return {
+            "saved": saved_count,
+            "duplicates": duplicate_count
+        }
         
     except Exception as e:
         logger.error(f"MT5データ保存エラー: {str(e)}")
-        return 0
+        return {"saved": 0, "duplicates": 0}
+
+async def save_mt5_historical_data(symbol: str, data_records: List[Dict[str, Any]]) -> int:
+    """
+    MT5から取得した履歴データをデータベースに保存（後方互換性のため）
+    """
+    result = await save_mt5_historical_data_with_duplicate_check(symbol, data_records, False)
+    return result["saved"]

@@ -370,6 +370,8 @@ class BacktestEngine:
             
             if strategy_type == 'swing':
                 return await self._generate_swing_signal(data, parameters)
+            elif strategy_type == 'dow_multi_timeframe':
+                return await self._generate_dow_multi_timeframe_signal(data, parameters)
             else:
                 return await self._generate_scalping_signal(data, parameters)
                 
@@ -897,3 +899,420 @@ class BacktestEngine:
         except Exception as e:
             logger.error(f"シャープレシオ計算エラー: {str(e)}")
             return None
+    
+    async def _generate_dow_multi_timeframe_signal(self, data: pd.DataFrame, parameters: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        マルチタイムフレーム・ダウ理論戦略
+        上位足・下位足を組み合わせたトレンド分析
+        """
+        try:
+            # 最低限必要なデータ数チェック
+            if len(data) < 120:
+                return {'action': 'hold', 'score': 0, 'stop_loss': None, 'take_profit': None}
+            
+            current_price = data['close'].iloc[-1]
+            
+            # === マルチタイムフレーム分析 ===
+            timeframes = {
+                'short_term': 20,   # 短期（約20時間）
+                'medium_term': 60,  # 中期（約60時間）
+                'long_term': 120,   # 長期（約120時間）
+            }
+            
+            multi_tf_analysis = {}
+            for tf_name, period in timeframes.items():
+                tf_data = data.tail(min(period * 3, len(data)))
+                tf_analysis = await self._analyze_dow_theory_timeframe(tf_data, period, tf_name)
+                multi_tf_analysis[tf_name] = tf_analysis
+            
+            # === トレンド統合判定 ===
+            trend_consensus = self._determine_trend_consensus(multi_tf_analysis)
+            
+            # === 複合スコアリング（100点満点） ===
+            
+            # 上位足トレンド（40点）
+            higher_tf_score = self._calculate_higher_timeframe_score(
+                multi_tf_analysis['long_term'], multi_tf_analysis['medium_term']
+            )
+            
+            # 下位足エントリータイミング（30点）
+            lower_tf_score = self._calculate_lower_timeframe_score(
+                multi_tf_analysis['short_term'], trend_consensus
+            )
+            
+            # 勢い確認（30点）
+            momentum_score = self._calculate_momentum_confirmation_score(data)
+            
+            total_score = higher_tf_score + lower_tf_score + momentum_score
+            
+            # === エントリー判定 ===
+            entry_threshold = parameters.get('mtf_threshold', 70)
+            action = 'hold'
+            
+            # マルチタイムフレーム条件
+            if total_score >= entry_threshold:
+                entry_signal = self._determine_mtf_entry(
+                    trend_consensus, multi_tf_analysis, current_price
+                )
+                action = entry_signal['action']
+            
+            # === リスク管理 ===
+            stop_loss, take_profit = self._calculate_mtf_exits(
+                action, current_price, multi_tf_analysis
+            )
+            
+            return {
+                'action': action,
+                'score': total_score,
+                'stop_loss': stop_loss,
+                'take_profit': take_profit,
+                'analysis': {
+                    'higher_tf_score': higher_tf_score,
+                    'lower_tf_score': lower_tf_score,
+                    'momentum_score': momentum_score,
+                    'trend_consensus': trend_consensus,
+                    'multi_tf_analysis': multi_tf_analysis,
+                    'method': 'dow_multi_timeframe'
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"マルチタイムフレーム・ダウ理論戦略エラー: {str(e)}")
+            return {'action': 'hold', 'score': 0, 'stop_loss': None, 'take_profit': None, 'analysis': {'error': str(e)}}
+    
+    async def _analyze_dow_theory_timeframe(self, data: pd.DataFrame, period: int, tf_name: str) -> Dict[str, Any]:
+        """特定時間軸でのダウ理論分析"""
+        try:
+            if len(data) < period:
+                return {'trend': 'insufficient_data', 'strength': 0, 'confidence': 0}
+            
+            # 時間軸に応じたスイングポイント検出
+            swing_period = max(3, period // 10)
+            
+            swing_highs = []
+            swing_lows = []
+            
+            for i in range(swing_period, len(data) - swing_period):
+                # スイングハイ検出
+                if (data['high'].iloc[i] == data['high'].iloc[i-swing_period:i+swing_period+1].max()):
+                    swing_highs.append({
+                        'index': i,
+                        'price': data['high'].iloc[i],
+                    })
+                
+                # スイングロー検出
+                if (data['low'].iloc[i] == data['low'].iloc[i-swing_period:i+swing_period+1].min()):
+                    swing_lows.append({
+                        'index': i,
+                        'price': data['low'].iloc[i],
+                    })
+            
+            # ダウ理論トレンド判定
+            trend_analysis = self._analyze_dow_trend_detailed(swing_highs, swing_lows, tf_name)
+            
+            # トレンド強度の計算
+            trend_strength = self._calculate_trend_strength(data, swing_highs, swing_lows)
+            
+            return {
+                'timeframe': tf_name,
+                'period': period,
+                'trend': trend_analysis['trend'],
+                'strength': trend_strength,
+                'confidence': trend_analysis['confidence'],
+                'swing_highs': swing_highs[-5:],
+                'swing_lows': swing_lows[-5:],
+                'trend_details': trend_analysis
+            }
+            
+        except Exception as e:
+            logger.error(f"時間軸分析エラー ({tf_name}): {str(e)}")
+            return {'trend': 'error', 'strength': 0, 'confidence': 0, 'error': str(e)}
+    
+    def _analyze_dow_trend_detailed(self, swing_highs: list, swing_lows: list, tf_name: str) -> Dict[str, Any]:
+        """詳細なダウ理論トレンド分析"""
+        try:
+            if len(swing_highs) < 2 or len(swing_lows) < 2:
+                return {'trend': 'insufficient_swings', 'confidence': 0, 'details': 'スイングポイント不足'}
+            
+            # 最新のスイングポイント分析
+            recent_highs = swing_highs[-3:] if len(swing_highs) >= 3 else swing_highs
+            recent_lows = swing_lows[-3:] if len(swing_lows) >= 3 else swing_lows
+            
+            # 高値の推移分析
+            high_trend = 'neutral'
+            if len(recent_highs) >= 2:
+                if recent_highs[-1]['price'] > recent_highs[-2]['price']:
+                    high_trend = 'higher_highs'
+                elif recent_highs[-1]['price'] < recent_highs[-2]['price']:
+                    high_trend = 'lower_highs'
+            
+            # 安値の推移分析
+            low_trend = 'neutral'
+            if len(recent_lows) >= 2:
+                if recent_lows[-1]['price'] > recent_lows[-2]['price']:
+                    low_trend = 'higher_lows'
+                elif recent_lows[-1]['price'] < recent_lows[-2]['price']:
+                    low_trend = 'lower_lows'
+            
+            # ダウ理論に基づく総合判定
+            if high_trend == 'higher_highs' and low_trend == 'higher_lows':
+                trend = 'strong_uptrend'
+                confidence = 0.9
+            elif high_trend == 'higher_highs' and low_trend == 'neutral':
+                trend = 'uptrend'
+                confidence = 0.7
+            elif high_trend == 'neutral' and low_trend == 'higher_lows':
+                trend = 'weak_uptrend'
+                confidence = 0.6
+            elif high_trend == 'lower_highs' and low_trend == 'lower_lows':
+                trend = 'strong_downtrend'
+                confidence = 0.9
+            elif high_trend == 'lower_highs' and low_trend == 'neutral':
+                trend = 'downtrend'
+                confidence = 0.7
+            elif high_trend == 'neutral' and low_trend == 'lower_lows':
+                trend = 'weak_downtrend'
+                confidence = 0.6
+            else:
+                trend = 'sideways'
+                confidence = 0.4
+            
+            return {
+                'trend': trend,
+                'confidence': confidence,
+                'high_trend': high_trend,
+                'low_trend': low_trend,
+                'details': f'{tf_name}: {high_trend} + {low_trend} → {trend}'
+            }
+            
+        except Exception as e:
+            return {'trend': 'error', 'confidence': 0, 'details': str(e)}
+    
+    def _calculate_trend_strength(self, data: pd.DataFrame, swing_highs: list, swing_lows: list) -> float:
+        """トレンド強度の計算"""
+        try:
+            if len(data) < 20:
+                return 0.0
+            
+            # 1. 方向性の一貫性
+            price_changes = data['close'].diff().dropna()
+            positive_days = (price_changes > 0).sum()
+            total_days = len(price_changes)
+            directional_consistency = abs((positive_days / total_days) - 0.5) * 2
+            
+            # 2. 価格変動の幅
+            price_range = (data['close'].max() - data['close'].min()) / data['close'].mean()
+            momentum_strength = min(price_range * 10, 1.0)
+            
+            # 3. スイングポイントの明確さ
+            swing_clarity = 0.0
+            if swing_highs and swing_lows:
+                total_swings = len(swing_highs) + len(swing_lows)
+                data_length = len(data)
+                swing_ratio = total_swings / (data_length / 20)
+                swing_clarity = min(swing_ratio, 1.0)
+            
+            # 総合強度
+            total_strength = (directional_consistency * 0.4 + 
+                            momentum_strength * 0.4 + 
+                            swing_clarity * 0.2)
+            
+            return min(total_strength, 1.0)
+            
+        except Exception as e:
+            return 0.0
+    
+    def _determine_trend_consensus(self, multi_tf_analysis: Dict[str, Dict]) -> Dict[str, Any]:
+        """複数時間軸のトレンド合意を判定"""
+        try:
+            timeframes = ['short_term', 'medium_term', 'long_term']
+            trends = []
+            strengths = []
+            confidences = []
+            
+            for tf in timeframes:
+                tf_data = multi_tf_analysis.get(tf, {})
+                trend = tf_data.get('trend', 'unknown')
+                strength = tf_data.get('strength', 0)
+                confidence = tf_data.get('confidence', 0)
+                
+                trends.append(trend)
+                strengths.append(strength)
+                confidences.append(confidence)
+            
+            # トレンド方向の一致度
+            uptrend_count = trends.count('uptrend') + trends.count('strong_uptrend')
+            downtrend_count = trends.count('downtrend') + trends.count('strong_downtrend')
+            
+            # 上位足重視の重み付け
+            weighted_strength = (strengths[2] * 0.5 + strengths[1] * 0.3 + strengths[0] * 0.2)
+            weighted_confidence = (confidences[2] * 0.5 + confidences[1] * 0.3 + confidences[0] * 0.2)
+            
+            # 総合判定
+            if uptrend_count >= 2 and weighted_strength > 0.6:
+                consensus = 'bullish_consensus'
+            elif downtrend_count >= 2 and weighted_strength > 0.6:
+                consensus = 'bearish_consensus'
+            elif uptrend_count == downtrend_count:
+                consensus = 'neutral_consensus'
+            else:
+                consensus = 'mixed_signals'
+            
+            return {
+                'consensus': consensus,
+                'strength': weighted_strength,
+                'confidence': weighted_confidence,
+                'uptrend_count': uptrend_count,
+                'downtrend_count': downtrend_count,
+                'individual_trends': {tf: trends[i] for i, tf in enumerate(timeframes)}
+            }
+            
+        except Exception as e:
+            return {'consensus': 'error', 'strength': 0, 'confidence': 0, 'error': str(e)}
+    
+    def _calculate_higher_timeframe_score(self, long_tf: Dict, medium_tf: Dict) -> float:
+        """上位足トレンドスコア計算（40点満点）"""
+        try:
+            score = 0
+            
+            # 長期足の重み（25点）
+            long_trend = long_tf.get('trend', 'unknown')
+            if long_trend in ['strong_uptrend', 'strong_downtrend']:
+                score += 25
+            elif long_trend in ['uptrend', 'downtrend']:
+                score += 20
+            elif long_trend in ['weak_uptrend', 'weak_downtrend']:
+                score += 10
+            
+            # 中期足の重み（15点）
+            medium_trend = medium_tf.get('trend', 'unknown')
+            if medium_trend in ['strong_uptrend', 'strong_downtrend']:
+                score += 15
+            elif medium_trend in ['uptrend', 'downtrend']:
+                score += 12
+            elif medium_trend in ['weak_uptrend', 'weak_downtrend']:
+                score += 6
+            
+            return min(score, 40)
+            
+        except Exception as e:
+            return 0
+    
+    def _calculate_lower_timeframe_score(self, short_tf: Dict, trend_consensus: Dict) -> float:
+        """下位足エントリータイミングスコア（30点満点）"""
+        try:
+            score = 0
+            
+            short_trend = short_tf.get('trend', 'unknown')
+            consensus = trend_consensus.get('consensus', 'mixed_signals')
+            confidence = trend_consensus.get('confidence', 0)
+            
+            # 短期足トレンド評価（15点）
+            if short_trend in ['strong_uptrend', 'strong_downtrend']:
+                score += 15
+            elif short_trend in ['uptrend', 'downtrend']:
+                score += 12
+            elif short_trend in ['weak_uptrend', 'weak_downtrend']:
+                score += 6
+            
+            # コンセンサスとの整合性（10点）
+            if consensus in ['bullish_consensus', 'bearish_consensus']:
+                if (consensus == 'bullish_consensus' and short_trend.endswith('uptrend')) or \
+                   (consensus == 'bearish_consensus' and short_trend.endswith('downtrend')):
+                    score += 10
+                else:
+                    score += 3
+            
+            # 信頼度ボーナス（5点）
+            score += confidence * 5
+            
+            return min(score, 30)
+            
+        except Exception as e:
+            return 0
+    
+    def _calculate_momentum_confirmation_score(self, data: pd.DataFrame) -> float:
+        """勢い確認スコア（30点満点）"""
+        try:
+            if len(data) < 20:
+                return 0
+            
+            score = 0
+            
+            # ボリューム分析（15点）
+            recent_volume = data['volume'].tail(5).mean()
+            avg_volume = data['volume'].tail(20).mean()
+            
+            if recent_volume > avg_volume * 1.3:
+                score += 15
+            elif recent_volume > avg_volume * 1.1:
+                score += 10
+            elif recent_volume > avg_volume:
+                score += 5
+            
+            # 価格勢い分析（15点）
+            recent_close = data['close'].iloc[-1]
+            prev_close = data['close'].iloc[-10] if len(data) >= 10 else data['close'].iloc[0]
+            
+            price_momentum = (recent_close - prev_close) / prev_close
+            
+            if abs(price_momentum) > 0.01:  # 1%以上の変動
+                score += 15
+            elif abs(price_momentum) > 0.005:  # 0.5%以上
+                score += 10
+            elif abs(price_momentum) > 0.002:  # 0.2%以上
+                score += 5
+            
+            return min(score, 30)
+            
+        except Exception as e:
+            return 0
+    
+    def _determine_mtf_entry(self, trend_consensus: Dict, multi_tf_analysis: Dict, current_price: float) -> Dict[str, Any]:
+        """マルチタイムフレームエントリー判定"""
+        try:
+            consensus = trend_consensus.get('consensus', 'mixed_signals')
+            
+            # エントリー条件
+            if consensus == 'bullish_consensus':
+                short_trend = multi_tf_analysis.get('short_term', {}).get('trend', 'unknown')
+                
+                if short_trend in ['uptrend', 'weak_uptrend']:
+                    return {'action': 'buy', 'confidence': 'high'}
+                elif short_trend == 'sideways':
+                    return {'action': 'buy', 'confidence': 'medium'}
+                    
+            elif consensus == 'bearish_consensus':
+                short_trend = multi_tf_analysis.get('short_term', {}).get('trend', 'unknown')
+                
+                if short_trend in ['downtrend', 'weak_downtrend']:
+                    return {'action': 'sell', 'confidence': 'high'}
+                elif short_trend == 'sideways':
+                    return {'action': 'sell', 'confidence': 'medium'}
+            
+            return {'action': 'hold', 'confidence': 'low'}
+            
+        except Exception as e:
+            return {'action': 'hold', 'confidence': 'error'}
+    
+    def _calculate_mtf_exits(self, action: str, current_price: float, multi_tf_analysis: Dict) -> tuple:
+        """マルチタイムフレーム損切り・利確計算"""
+        try:
+            if action == 'hold':
+                return None, None
+            
+            # ATR的な変動幅計算
+            volatility = current_price * 0.015  # 1.5%をデフォルト
+            
+            if action == 'buy':
+                stop_loss = current_price - (volatility * 2)
+                take_profit = current_price + (volatility * 3)
+                
+            else:  # sell
+                stop_loss = current_price + (volatility * 2)
+                take_profit = current_price - (volatility * 3)
+            
+            return stop_loss, take_profit
+            
+        except Exception as e:
+            return None, None

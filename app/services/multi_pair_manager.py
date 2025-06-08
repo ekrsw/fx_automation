@@ -12,6 +12,8 @@ from ..core.database import db_manager
 from ..core.logging import get_logger
 from .technical_analysis import technical_analysis_service
 from .risk_management import risk_manager
+from .enhanced_signal_generator import enhanced_signal_generator
+from .elliott_wave_analyzer import elliott_wave_analyzer
 
 logger = get_logger(__name__)
 
@@ -58,15 +60,27 @@ class MultiPairManager:
                     logger.warning(f"No market data available for {symbol}")
                     continue
                 
-                # テクニカル分析実行
-                analysis = technical_analysis_service.analyze_market_data(market_data)
+                # 強化されたシグナル生成を使用
+                comprehensive_signal = enhanced_signal_generator.generate_comprehensive_signal(
+                    symbol=symbol,
+                    primary_timeframe='H4'  # 4時間足をメインに使用
+                )
                 
-                if 'error' in analysis:
-                    logger.error(f"Analysis failed for {symbol}: {analysis['error']}")
+                if 'error' in comprehensive_signal:
+                    logger.error(f"Signal generation failed for {symbol}: {comprehensive_signal['error']}")
                     continue
                 
-                # スコアリング計算
-                score = self.calculate_pair_score(symbol, analysis)
+                # テクニカル分析結果を取得
+                analysis = comprehensive_signal.get('multi_timeframe_analysis', {}).get('H4', {})
+                if not analysis:
+                    # フォールバック：従来の分析を使用
+                    analysis = technical_analysis_service.analyze_market_data(market_data)
+                
+                # スコアリング計算（強化版のスコアを優先）
+                if 'score_breakdown' in comprehensive_signal:
+                    score = comprehensive_signal['score_breakdown']
+                else:
+                    score = self.calculate_pair_score(symbol, analysis)
                 
                 analysis_results[symbol] = {
                     'analysis': analysis,
@@ -130,57 +144,81 @@ class MultiPairManager:
             return {'total_score': 0, 'error': str(e)}
     
     def calculate_elliott_score(self, swing_points: List, zigzag_points: List) -> int:
-        """エリオット波動位置スコア計算"""
+        """エリオット波動位置スコア計算（強化版）"""
         if len(zigzag_points) < 5:
             return 10  # データ不足
         
-        # 簡易的なエリオット波動判定
-        # 実際の実装では、より詳細な波動分析が必要
-        
-        # ZigZagポイントから波動パターンを分析
-        recent_points = zigzag_points[-5:]  # 最新5ポイント
-        
-        # 価格変動の大きさを分析
-        price_moves = []
-        for i in range(1, len(recent_points)):
-            move = abs(recent_points[i]['price'] - recent_points[i-1]['price'])
-            price_moves.append(move)
-        
-        if len(price_moves) >= 2:
-            # 第3波の特徴：大きな価格変動
-            if len(price_moves) >= 2 and price_moves[-1] > max(price_moves[:-1]) * 1.2:
-                return 40  # 第3波開始の可能性
-            elif len(price_moves) >= 3 and price_moves[-2] > max(price_moves) * 1.1:
-                return 30  # 第1波開始の可能性
-            else:
-                return 20  # その他の波動
-        
-        return 15  # 判定困難
+        try:
+            # エリオット波動分析器を使用
+            wave_patterns = elliott_wave_analyzer.detect_elliott_waves(zigzag_points)
+            current_position = elliott_wave_analyzer.get_current_wave_position(wave_patterns)
+            
+            # 現在の波動位置からスコアを取得
+            return current_position.get('score', 10)
+            
+        except Exception as e:
+            logger.error(f"Elliott wave score calculation error: {str(e)}")
+            # フォールバック：簡易的な計算
+            recent_points = zigzag_points[-5:]
+            price_moves = []
+            for i in range(1, len(recent_points)):
+                move = abs(recent_points[i]['price'] - recent_points[i-1]['price'])
+                price_moves.append(move)
+            
+            if len(price_moves) >= 2:
+                if price_moves[-1] > max(price_moves[:-1]) * 1.2:
+                    return 40
+                elif len(price_moves) >= 3 and price_moves[-2] > max(price_moves) * 1.1:
+                    return 30
+                else:
+                    return 20
+            
+            return 15
     
     def calculate_technical_accuracy(self, analysis: Dict) -> int:
-        """技術的確度スコア計算"""
+        """技術的確度スコア計算（強化版）"""
         score = 0
         
-        # スイングポイントの一貫性
+        # フィボナッチ比率の適合度（最大10点）
+        elliott_data = analysis.get('elliott_wave', {})
+        current_position = elliott_data.get('current_position', {})
+        fibonacci_ratios = current_position.get('fibonacci_ratios', {})
+        
+        if fibonacci_ratios:
+            # 理想的なフィボナッチ比率との一致度を評価
+            for ratio_name, ratio_value in fibonacci_ratios.items():
+                if 'retracement' in ratio_name:
+                    ideal_ratios = [0.382, 0.5, 0.618]
+                    min_diff = min(abs(ratio_value - ideal) for ideal in ideal_ratios)
+                    if min_diff <= 0.05:
+                        score += 5
+                    elif min_diff <= 0.1:
+                        score += 3
+                elif 'extension' in ratio_name:
+                    ideal_ratios = [1.618, 2.618]
+                    min_diff = min(abs(ratio_value - ideal) for ideal in ideal_ratios)
+                    if min_diff <= 0.1:
+                        score += 5
+                    elif min_diff <= 0.2:
+                        score += 3
+        
+        # データ品質と一貫性（最大10点）
         swing_points_count = analysis.get('swing_points_count', 0)
-        if swing_points_count >= 4:
-            score += 8
-        elif swing_points_count >= 2:
-            score += 5
-        
-        # ZigZagポイントの信頼性
         zigzag_count = analysis.get('zigzag_points_count', 0)
-        if zigzag_count >= 6:
-            score += 7
-        elif zigzag_count >= 3:
-            score += 4
-        
-        # データ品質
         data_points = analysis.get('data_points', 0)
+        
+        quality_score = 0
+        if swing_points_count >= 4 and zigzag_count >= 6:
+            quality_score += 5
+        elif swing_points_count >= 2 and zigzag_count >= 3:
+            quality_score += 3
+        
         if data_points >= 100:
-            score += 5
+            quality_score += 5
         elif data_points >= 50:
-            score += 3
+            quality_score += 3
+        
+        score += quality_score
         
         return min(score, 20)
     
